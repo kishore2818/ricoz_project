@@ -1,4 +1,22 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api';
+const RAW_API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api';
+
+// Sanitize API_URL: strip trailing slashes and ensure /api prefix is normalized
+function normalizeApiUrl(url) {
+  let clean = (url || '').trim().replace(/\/+$/, '');
+  if (!clean) return 'http://localhost:5001/api';
+  if (!clean.endsWith('/api')) {
+    clean = `${clean}/api`;
+  }
+  return clean;
+}
+
+const API_URL = normalizeApiUrl(RAW_API_URL);
+
+// Helper to safely join path with API_URL without duplicate slashes
+function buildUrl(path) {
+  const cleanPath = path.startsWith('/') ? path : `/${path}`;
+  return `${API_URL}${cleanPath}`;
+}
 
 function getAuthHeaders() {
   if (typeof window === 'undefined') return {};
@@ -18,7 +36,7 @@ function handleUnauthorized(status) {
 }
 
 export async function apiGet(path) {
-  const res = await fetch(`${API_URL}${path}`, {
+  const res = await fetch(buildUrl(path), {
     headers: {
       'Content-Type': 'application/json',
       ...getAuthHeaders(),
@@ -33,7 +51,7 @@ export async function apiGet(path) {
 }
 
 export async function apiPost(path, body = {}) {
-  const res = await fetch(`${API_URL}${path}`, {
+  const res = await fetch(buildUrl(path), {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -50,7 +68,7 @@ export async function apiPost(path, body = {}) {
 }
 
 export async function apiPut(path, body = {}) {
-  const res = await fetch(`${API_URL}${path}`, {
+  const res = await fetch(buildUrl(path), {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -67,7 +85,7 @@ export async function apiPut(path, body = {}) {
 }
 
 export async function apiDelete(path) {
-  const res = await fetch(`${API_URL}${path}`, {
+  const res = await fetch(buildUrl(path), {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
@@ -85,7 +103,7 @@ export async function apiDelete(path) {
 export async function apiUpload(path, formData, onProgress) {
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', `${API_URL}${path}`);
+    xhr.open('POST', buildUrl(path));
 
     const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
     if (token) {
@@ -123,7 +141,7 @@ export async function apiUpload(path, formData, onProgress) {
 }
 
 export async function login(email, password) {
-  const res = await fetch(`${API_URL}/auth/login`, {
+  const res = await fetch(buildUrl('/auth/login'), {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email, password }),
@@ -136,7 +154,7 @@ export async function login(email, password) {
 }
 
 export async function register(userData) {
-  const res = await fetch(`${API_URL}/auth/register`, {
+  const res = await fetch(buildUrl('/auth/register'), {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(userData),
