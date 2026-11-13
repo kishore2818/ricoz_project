@@ -23,6 +23,7 @@ import {
   FileOutput,
   Users,
   Settings,
+  Compass,
   LogOut,
   Menu,
   X,
@@ -30,6 +31,7 @@ import {
 
 const NAV_ITEMS = [
   { label: 'Dashboard',           href: '/dashboard',      icon: LayoutDashboard },
+  { label: 'Client Onboarding',   href: '/onboarding',     icon: Compass },
   { label: 'Funds',               href: '/funds',          icon: Landmark },
   { label: 'Portfolio Companies', href: '/companies',      icon: Building2 },
   { label: 'Documents',           href: '/documents',      icon: FileText },

@@ -5,7 +5,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { login as apiLogin, register as apiRegister } from '../services/api';
 
 const AuthContext = createContext(null);
-const PUBLIC_ROUTES = ['/', '/login', '/register'];
+const PUBLIC_ROUTES = ['/', '/login', '/register', '/onboarding'];
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);

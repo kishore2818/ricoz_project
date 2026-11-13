@@ -37,7 +37,7 @@ export default function RegisterPage() {
 
     try {
       await register({ name, email, password, role });
-      router.push('/dashboard');
+      router.push('/onboarding');
     } catch (err) {
       setError(err?.message || 'Registration failed. Please try again.');
     } finally {
