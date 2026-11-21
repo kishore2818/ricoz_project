@@ -7,6 +7,7 @@
  */
 
 import Link from 'next/link';
+import Footer from '@/components/Footer';
 import { useAuth } from '@/context/AuthContext';
 import {
   UploadCloud,
@@ -326,20 +327,7 @@ export default function LandingPage() {
       </section>
 
       {/* 5. Institutional Footer */}
-      <footer className="py-10 px-6 bg-white">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
-          <div className="flex items-center gap-2">
-            <span className="font-bold text-slate-800">Apex Horizon Capital</span>
-            <span>• LP Quarterly Reporting & Intelligence Platform</span>
-          </div>
-
-          <div className="flex items-center gap-4">
-            <Link href="/onboarding" className="hover:text-blue-600 transition-colors">Onboarding</Link>
-            <Link href="/login" className="hover:text-blue-600 transition-colors">Sign In</Link>
-            <Link href="/register" className="hover:text-blue-600 transition-colors">Register</Link>
-          </div>
-        </div>
-      </footer>
+      <Footer />
 
     </div>
   );

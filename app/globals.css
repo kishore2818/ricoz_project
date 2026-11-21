@@ -6,3 +6,62 @@
 body {
   @apply bg-gray-50 text-gray-900 antialiased;
 }
+
+/* Skip to content link */
+.skip-to-content {
+  @apply absolute -top-10 left-4 z-[100] bg-blue-600 text-white px-4 py-2 rounded-b-lg font-medium text-sm transition-all;
+}
+.skip-to-content:focus {
+  @apply top-0;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Better focus styles */
+*:focus-visible {
+  @apply outline-none ring-2 ring-blue-500 ring-offset-2;
+}
+
+/* Selection */
+::selection {
+  @apply bg-blue-600 text-white;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 rounded-full;
+}
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-400;
+}
+
+/* Toast animations */
+@keyframes toast-in {
+  from { opacity: 0; transform: translateX(100%); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes toast-out {
+  from { opacity: 1; transform: translateX(0); }
+  to   { opacity: 0; transform: translateX(100%); }
+}
+.toast-enter { animation: toast-in 0.3s ease-out forwards; }
+.toast-exit  { animation: toast-out 0.3s ease-in forwards; }
+
+/* Page transition */
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.page-enter {
+  animation: fade-in 0.3s ease-out;
+}
