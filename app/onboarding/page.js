@@ -23,7 +23,8 @@ import {
   UploadCloud,
   FileCheck2,
   Users,
-  Compass
+  Compass,
+  AlertCircle
 } from 'lucide-react';
 
 const STEPS = [
@@ -39,6 +40,7 @@ export default function OnboardingPage() {
 
   const [currentStep, setCurrentStep] = useState(1);
   const [completing, setCompleting] = useState(false);
+  const [errors, setErrors] = useState({});
 
   // Form State
   const [formData, setFormData] = useState({
@@ -74,7 +76,34 @@ export default function OnboardingPage() {
     });
   }
 
+  function validateStep() {
+    const errs = {};
+    if (currentStep === 1) {
+      if (!formData.fundName.trim()) errs.fundName = 'Fund Name is required';
+      if (!formData.fundStrategy.trim()) errs.fundStrategy = 'Investment Strategy is required';
+      if (!formData.targetSize.trim()) errs.targetSize = 'Committed Capital / Target Size is required';
+    }
+    if (currentStep === 2) {
+      if (formData.selectedKPIs.length === 0) errs.kpis = 'Please select at least one reporting KPI';
+    }
+    setErrors(errs);
+    return Object.keys(errs).length === 0;
+  }
+
+  function handleInputChange(field, value) {
+    setFormData(prev => ({ ...prev, [field]: value }));
+    if (errors[field]) {
+      setErrors(prev => {
+        const copy = { ...prev };
+        delete copy[field];
+        return copy;
+      });
+    }
+  }
+
   function handleNext() {
+    if (!validateStep()) return;
+
     if (currentStep < 4) {
       setCurrentStep(prev => prev + 1);
     } else {
@@ -83,6 +112,7 @@ export default function OnboardingPage() {
   }
 
   function handleBack() {
+    setErrors({});
     if (currentStep > 1) {
       setCurrentStep(prev => prev - 1);
     }
@@ -199,50 +229,85 @@ export default function OnboardingPage() {
                 </p>
               </div>
 
+              {/* Form Error Banner */}
+              {Object.keys(errors).length > 0 && (
+                <div className="p-3.5 rounded-xl bg-red-50 border border-red-200 text-red-800 text-xs flex items-center gap-2.5 mb-2">
+                  <AlertCircle size={16} className="text-red-600 shrink-0" />
+                  <span>Please fill in all required fields marked with an asterisk (<span className="text-red-500 font-bold">*</span>) before proceeding.</span>
+                </div>
+              )}
+
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div>
                   <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
-                    Fund Name
+                    Fund Name <span className="text-red-500 font-bold ml-1">*</span>
                   </label>
                   <input
                     type="text"
                     value={formData.fundName}
-                    onChange={e => setFormData({ ...formData, fundName: e.target.value })}
-                    className="w-full rounded-xl bg-slate-50 border border-slate-200 px-3.5 py-2.5 text-sm font-medium text-slate-900 focus:outline-none focus:border-blue-600 focus:bg-white focus:ring-4 focus:ring-blue-100 transition-all"
+                    onChange={e => handleInputChange('fundName', e.target.value)}
+                    className={`w-full rounded-xl bg-slate-50 border px-3.5 py-2.5 text-sm font-medium text-slate-900 focus:outline-none focus:bg-white transition-all ${
+                      errors.fundName
+                        ? 'border-red-500 ring-2 ring-red-100 bg-red-50/20'
+                        : 'border-slate-200 focus:border-blue-600 focus:ring-4 focus:ring-blue-100'
+                    }`}
                   />
+                  {errors.fundName && (
+                    <p className="text-xs text-red-600 font-medium mt-1 flex items-center gap-1">
+                      <AlertCircle size={12} /> {errors.fundName}
+                    </p>
+                  )}
                 </div>
 
                 <div>
                   <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
-                    Investment Strategy
+                    Investment Strategy <span className="text-red-500 font-bold ml-1">*</span>
                   </label>
                   <input
                     type="text"
                     value={formData.fundStrategy}
-                    onChange={e => setFormData({ ...formData, fundStrategy: e.target.value })}
-                    className="w-full rounded-xl bg-slate-50 border border-slate-200 px-3.5 py-2.5 text-sm font-medium text-slate-900 focus:outline-none focus:border-blue-600 focus:bg-white focus:ring-4 focus:ring-blue-100 transition-all"
+                    onChange={e => handleInputChange('fundStrategy', e.target.value)}
+                    className={`w-full rounded-xl bg-slate-50 border px-3.5 py-2.5 text-sm font-medium text-slate-900 focus:outline-none focus:bg-white transition-all ${
+                      errors.fundStrategy
+                        ? 'border-red-500 ring-2 ring-red-100 bg-red-50/20'
+                        : 'border-slate-200 focus:border-blue-600 focus:ring-4 focus:ring-blue-100'
+                    }`}
                   />
+                  {errors.fundStrategy && (
+                    <p className="text-xs text-red-600 font-medium mt-1 flex items-center gap-1">
+                      <AlertCircle size={12} /> {errors.fundStrategy}
+                    </p>
+                  )}
                 </div>
 
                 <div>
                   <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
-                    Committed Capital / Target Size
+                    Committed Capital / Target Size <span className="text-red-500 font-bold ml-1">*</span>
                   </label>
                   <input
                     type="text"
                     value={formData.targetSize}
-                    onChange={e => setFormData({ ...formData, targetSize: e.target.value })}
-                    className="w-full rounded-xl bg-slate-50 border border-slate-200 px-3.5 py-2.5 text-sm font-medium text-slate-900 focus:outline-none focus:border-blue-600 focus:bg-white focus:ring-4 focus:ring-blue-100 transition-all"
+                    onChange={e => handleInputChange('targetSize', e.target.value)}
+                    className={`w-full rounded-xl bg-slate-50 border px-3.5 py-2.5 text-sm font-medium text-slate-900 focus:outline-none focus:bg-white transition-all ${
+                      errors.targetSize
+                        ? 'border-red-500 ring-2 ring-red-100 bg-red-50/20'
+                        : 'border-slate-200 focus:border-blue-600 focus:ring-4 focus:ring-blue-100'
+                    }`}
                   />
+                  {errors.targetSize && (
+                    <p className="text-xs text-red-600 font-medium mt-1 flex items-center gap-1">
+                      <AlertCircle size={12} /> {errors.targetSize}
+                    </p>
+                  )}
                 </div>
 
                 <div>
                   <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
-                    Reporting Cadence
+                    Reporting Cadence <span className="text-red-500 font-bold ml-1">*</span>
                   </label>
                   <select
                     value={formData.reportingCadence}
-                    onChange={e => setFormData({ ...formData, reportingCadence: e.target.value })}
+                    onChange={e => handleInputChange('reportingCadence', e.target.value)}
                     className="w-full rounded-xl bg-slate-50 border border-slate-200 px-3.5 py-2.5 text-sm font-medium text-slate-900 focus:outline-none focus:border-blue-600 focus:bg-white focus:ring-4 focus:ring-blue-100 transition-all"
                   >
                     <option>Quarterly (Q3 2026)</option>
@@ -276,9 +341,14 @@ export default function OnboardingPage() {
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-3">
-                  Selected Disclosure Metrics ({formData.selectedKPIs.length} Active)
+                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                  Selected Disclosure Metrics ({formData.selectedKPIs.length} Active) <span className="text-red-500 font-bold ml-1">*</span>
                 </label>
+                {errors.kpis && (
+                  <p className="text-xs text-red-600 font-medium mb-3 flex items-center gap-1">
+                    <AlertCircle size={12} /> {errors.kpis}
+                  </p>
+                )}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {availableKPIs.map(kpi => {
                     const isSelected = formData.selectedKPIs.includes(kpi.id);
