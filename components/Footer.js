@@ -1,27 +1,20 @@
 import Link from 'next/link';
+import Logo from '@/components/Logo';
 import { ShieldCheck } from 'lucide-react';
 
 export default function Footer() {
   return (
-    <footer className="bg-white border-t border-gray-200">
+    <footer className="bg-white border-t border-slate-200">
       <div className="max-w-7xl mx-auto px-6 py-10">
         {/* Three columns */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mb-8">
           {/* Brand */}
           <div>
-            <div className="flex items-center gap-2.5 mb-3">
-              <div className="h-8 w-8 rounded-lg bg-gradient-to-tr from-blue-600 to-indigo-700 text-white font-bold text-xs flex items-center justify-center">
-                AP
-              </div>
-              <div>
-                <p className="font-bold text-gray-900 text-sm">Apex Horizon Capital</p>
-                <p className="text-[10px] text-blue-600 font-semibold uppercase tracking-wider">
-                  PE LP Reporting & Intelligence
-                </p>
-              </div>
+            <div className="mb-3">
+              <Logo size="md" variant="dark" />
             </div>
-            <p className="text-xs text-gray-500 leading-relaxed">
-              AI-powered quarterly reporting platform for private equity fund managers, LPs, and analysts.
+            <p className="text-xs text-slate-500 leading-relaxed mt-2">
+              AI-powered quarterly reporting and ILPA disclosure platform for private equity fund managers, institutional LPs, and compliance analysts.
             </p>
           </div>
 

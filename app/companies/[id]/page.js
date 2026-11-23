@@ -43,10 +43,10 @@ export default function CompanyDetailPage() {
   }
 
   function formatMoney(amount) {
-    if (!amount) return '$0';
-    if (amount >= 1e9) return `$${(amount / 1e9).toFixed(1)}B`;
-    if (amount >= 1e6) return `$${(amount / 1e6).toFixed(1)}M`;
-    return `$${Number(amount).toLocaleString()}`;
+    if (!amount) return '₹0';
+    if (amount >= 1e7) return `₹${(amount / 1e7).toFixed(1)} Cr`;
+    if (amount >= 1e5) return `₹${(amount / 1e5).toFixed(1)} L`;
+    return `₹${Number(amount).toLocaleString('en-IN')}`;
   }
 
   const chartData = (data?.valuations || []).map(v => ({

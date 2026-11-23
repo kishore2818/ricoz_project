@@ -49,14 +49,14 @@ export default function ValuationsPage() {
 
   function formatMoney(amount) {
     if (amount === null || amount === undefined) return '—';
-    if (Math.abs(amount) >= 1e9) return `$${(amount / 1e9).toFixed(1)}B`;
-    if (Math.abs(amount) >= 1e6) return `$${(amount / 1e6).toFixed(1)}M`;
-    return `$${Number(amount).toLocaleString()}`;
+    if (Math.abs(amount) >= 1e7) return `₹${(amount / 1e7).toFixed(1)} Cr`;
+    if (Math.abs(amount) >= 1e5) return `₹${(amount / 1e5).toFixed(1)} L`;
+    return `₹${Number(amount).toLocaleString('en-IN')}`;
   }
 
   const chartData = valuations.map((v) => ({
     name: v.companyId?.name || 'Company',
-    delta: Math.round((v.valuationChange / 1e6) * 10) / 10,
+    delta: Math.round((v.valuationChange / 1e7) * 10) / 10,
     growth: v.valuationGrowthPercent
   }));
 
@@ -114,7 +114,7 @@ export default function ValuationsPage() {
                       <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
                       <XAxis dataKey="name" stroke="#64748b" fontSize={12} />
                       <YAxis stroke="#64748b" fontSize={12} />
-                      <Tooltip formatter={(val) => [`${val >= 0 ? '+' : ''}$${val}M`, 'Valuation Change']} />
+                      <Tooltip formatter={(val) => [`${val >= 0 ? '+' : ''}₹${val} Cr`, 'Valuation Change']} />
                       <Bar dataKey="delta" radius={[4, 4, 0, 0]}>
                         {chartData.map((entry, index) => (
                           <Cell

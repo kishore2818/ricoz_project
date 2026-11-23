@@ -17,17 +17,17 @@
  */
 
 const COLOR_MAP = {
-  uploaded:     'bg-yellow-100 text-yellow-800',
-  pending:      'bg-yellow-100 text-yellow-800',
-  processing:   'bg-blue-100 text-blue-800',
-  completed:    'bg-emerald-100 text-emerald-800',
-  approved:     'bg-emerald-100 text-emerald-800',
-  verified:     'bg-emerald-100 text-emerald-800',
-  'needs review': 'bg-orange-100 text-orange-800',
-  draft:        'bg-orange-100 text-orange-800',
-  failed:       'bg-red-100 text-red-800',
-  rejected:     'bg-red-100 text-red-800',
-  flagged:      'bg-purple-100 text-purple-800',
+  uploaded:     'bg-amber-50 text-amber-700 ring-1 ring-inset ring-amber-600/20',
+  pending:      'bg-amber-50 text-amber-700 ring-1 ring-inset ring-amber-600/20',
+  processing:   'bg-cyan-50 text-cyan-700 ring-1 ring-inset ring-cyan-600/20',
+  completed:    'bg-teal-50 text-teal-700 ring-1 ring-inset ring-teal-600/20',
+  approved:     'bg-teal-50 text-teal-700 ring-1 ring-inset ring-teal-600/20',
+  verified:     'bg-teal-50 text-teal-700 ring-1 ring-inset ring-teal-600/20',
+  'needs review': 'bg-orange-50 text-orange-700 ring-1 ring-inset ring-orange-600/20',
+  draft:        'bg-slate-100 text-slate-700 ring-1 ring-inset ring-slate-500/20',
+  failed:       'bg-rose-50 text-rose-700 ring-1 ring-inset ring-rose-600/20',
+  rejected:     'bg-rose-50 text-rose-700 ring-1 ring-inset ring-rose-600/20',
+  flagged:      'bg-indigo-50 text-indigo-700 ring-1 ring-inset ring-indigo-600/20',
 };
 
 const SIZE_CLASSES = {

@@ -9,6 +9,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
+import Logo from '@/components/Logo';
 import {
   Building2,
   FileSpreadsheet,
@@ -44,8 +45,8 @@ export default function CustomerOnboardingPage() {
     fundName: '',
     email: user?.email || '',
     fundStrategy: 'Growth Equity & Mid-Market Buyout',
-    targetSize: '$500M USD',
-    reportingCurrency: 'USD',
+    targetSize: '₹5,000 Cr INR',
+    reportingCurrency: 'INR',
     reportingCadence: 'Quarterly',
   });
 
@@ -124,19 +125,13 @@ export default function CustomerOnboardingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 via-blue-50/20 to-slate-100 text-slate-800 antialiased font-sans selection:bg-blue-600 selection:text-white">
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 via-teal-50/20 to-slate-100 text-slate-800 antialiased font-sans selection:bg-teal-500 selection:text-white">
       {/* Header */}
       <header className="border-b border-slate-200/90 bg-white/90 backdrop-blur-md sticky top-0 z-30">
         <div className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="h-9 w-9 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-700 text-white font-black flex items-center justify-center shadow-md shadow-blue-500/25">
-              AP
-            </div>
-            <div>
-              <span className="font-bold text-slate-900 text-sm block">APEX HORIZON CAPITAL</span>
-              <span className="text-[10px] text-blue-600 font-semibold uppercase block">Customer Fast-Track Wizard</span>
-            </div>
-          </div>
+          <Link href="/" className="flex items-center gap-2">
+            <Logo size="sm" variant="dark" />
+          </Link>
           <div className="flex items-center gap-4">
             <span className="text-xs text-slate-500 hidden sm:inline">
               Welcome, <strong className="text-slate-800">{user?.name || 'Partner'}</strong>
@@ -175,20 +170,20 @@ export default function CustomerOnboardingPage() {
                 key={step.id}
                 className={`p-3.5 rounded-xl border transition-all ${
                   isCurrent
-                    ? 'bg-white border-blue-500 shadow-md ring-2 ring-blue-500/20'
+                    ? 'bg-white border-teal-500 shadow-md ring-2 ring-teal-500/20'
                     : isDone
-                    ? 'bg-blue-50/70 border-blue-200 text-slate-700'
+                    ? 'bg-teal-50/70 border-teal-200 text-slate-700'
                     : 'bg-white/60 border-slate-200 text-slate-400 opacity-70'
                 }`}
               >
                 <div className="flex items-center justify-between mb-1.5">
-                  <span className={`text-[11px] font-bold uppercase tracking-wider ${isCurrent ? 'text-blue-600' : isDone ? 'text-slate-700' : 'text-slate-400'}`}>
+                  <span className={`text-[11px] font-bold uppercase tracking-wider ${isCurrent ? 'text-teal-700' : isDone ? 'text-slate-700' : 'text-slate-400'}`}>
                     Step {step.id}
                   </span>
                   {isDone ? (
-                    <CheckCircle2 size={16} className="text-blue-600" />
+                    <CheckCircle2 size={16} className="text-teal-600" />
                   ) : (
-                    <span className={`h-2 w-2 rounded-full ${isCurrent ? 'bg-blue-600 animate-pulse' : 'bg-slate-300'}`} />
+                    <span className={`h-2 w-2 rounded-full ${isCurrent ? 'bg-teal-600 animate-pulse' : 'bg-slate-300'}`} />
                   )}
                 </div>
                 <div className="text-sm font-bold text-slate-900">{step.title}</div>
@@ -487,7 +482,7 @@ export default function CustomerOnboardingPage() {
           <button
             onClick={handleNext}
             disabled={completing}
-            className="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold rounded-xl shadow-md shadow-blue-500/20 flex items-center gap-2 transition"
+            className="px-6 py-2.5 bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-500 hover:to-cyan-500 text-white text-sm font-bold rounded-xl shadow-md shadow-teal-500/20 flex items-center gap-2 transition"
           >
             {completing ? (
               'Launching Workspace...'

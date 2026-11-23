@@ -210,9 +210,9 @@ export default function KPIAnalyticsPage() {
                             {kpi.reportingQuarter} {kpi.reportingYear}
                           </td>
                           <td className="py-3 font-mono font-bold text-gray-900">
-                            {kpi.unitOrCurrency === 'USD' ? '$' : ''}
-                            {Number(kpi.extractedValue).toLocaleString()}{' '}
-                            {kpi.unitOrCurrency !== 'USD' ? kpi.unitOrCurrency : ''}
+                            {kpi.unitOrCurrency === 'USD' || kpi.unitOrCurrency === 'INR' ? '₹' : ''}
+                            {Number(kpi.extractedValue).toLocaleString('en-IN')}{' '}
+                            {kpi.unitOrCurrency !== 'USD' && kpi.unitOrCurrency !== 'INR' ? kpi.unitOrCurrency : ''}
                           </td>
                           <td className="py-3 text-xs text-gray-500 max-w-xs truncate">
                             p. {kpi.sourcePageNumber || 1}

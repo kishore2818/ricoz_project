@@ -42,24 +42,24 @@ export default function MetricsCard({
   return (
     <div
       className={`
-        bg-white rounded-xl border border-gray-100 shadow-sm
-        p-5 flex items-start gap-4 transition-shadow hover:shadow-md
+        bg-white rounded-xl border border-slate-200/90 shadow-xs
+        p-5 flex items-start gap-4 transition-all duration-200 hover:shadow-md hover:border-slate-300
         ${className}
       `}
     >
       {/* Icon circle */}
       {Icon && (
-        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-blue-50 text-blue-600">
+        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-teal-50 text-teal-600 border border-teal-100/70">
           <Icon size={20} />
         </div>
       )}
 
       {/* Text content */}
       <div className="min-w-0 flex-1">
-        <p className="text-sm font-medium text-gray-500 truncate">{title}</p>
-        <p className="mt-1 text-2xl font-bold text-gray-900 truncate">{value}</p>
+        <p className="text-xs font-semibold uppercase tracking-wider text-slate-500 truncate">{title}</p>
+        <p className="mt-1 text-2xl font-bold tracking-tight text-slate-900 font-mono truncate">{value}</p>
 
-        <div className="mt-1 flex items-center gap-2">
+        <div className="mt-1.5 flex items-center gap-2">
           {/* Trend pill */}
           {trend && (
             <span
@@ -72,7 +72,7 @@ export default function MetricsCard({
 
           {/* Subtitle */}
           {subtitle && (
-            <span className="text-xs text-gray-400 truncate">{subtitle}</span>
+            <span className="text-xs text-slate-400 truncate">{subtitle}</span>
           )}
         </div>
       </div>

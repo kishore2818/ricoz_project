@@ -2,13 +2,15 @@ import Link from 'next/link';
 
 const VARIANTS = {
   primary:
-    'bg-blue-600 hover:bg-blue-700 text-white shadow-sm',
+    'bg-teal-600 hover:bg-teal-500 text-white shadow-sm shadow-teal-600/25 active:bg-teal-700',
   secondary:
-    'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50',
+    'bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 hover:text-slate-900 shadow-xs active:bg-slate-100',
+  accent:
+    'bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-500 hover:to-cyan-500 text-white shadow-sm shadow-cyan-500/25',
   danger:
-    'bg-red-600 hover:bg-red-700 text-white',
+    'bg-rose-600 hover:bg-rose-700 text-white shadow-sm shadow-rose-600/20',
   ghost:
-    'text-gray-600 hover:bg-gray-100 hover:text-gray-900',
+    'text-slate-600 hover:bg-slate-100/80 hover:text-slate-900',
 };
 
 const SIZES = {

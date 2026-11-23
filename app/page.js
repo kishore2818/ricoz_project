@@ -2,12 +2,14 @@
 
 /**
  * Public Customer Landing Page (/)
- * Institutional, high-converting product landing page for Apex Horizon Capital PE LP Reporting Agent.
- * Embeds the exact 6-stage core institutional operating flow.
+ * Institutional, high-converting product landing page for Ricoz PE LP Reporting Agent.
+ * Elevated with ambient mesh background effects, live interactive simulation, and Indian Rupee (₹) metrics.
  */
 
 import Link from 'next/link';
+import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import Logo from '@/components/Logo';
 import { useAuth } from '@/context/AuthContext';
 import {
   UploadCloud,
@@ -25,225 +27,310 @@ import {
   ShieldCheck,
   Lock,
   ChevronRight,
-  Compass
+  Compass,
+  Check,
+  Activity,
+  Layers,
+  Zap,
 } from 'lucide-react';
 
 const OPERATING_FLOW_STEPS = [
   {
     step: '01',
-    title: 'Upload company reports',
-    subtitle: 'PDF, Excel, Word',
-    desc: 'Drag & drop raw quarterly filings, board decks, and financial statements.',
+    title: 'Upload Company Filings',
+    subtitle: 'PDF, Excel, Word & Scanned Statements',
+    desc: 'Drag & drop quarterly financial statements, board presentations, and debt covenant schedules.',
     icon: UploadCloud,
-    accent: 'blue',
+    badge: 'Multi-Format Parser',
     route: '/documents',
   },
   {
     step: '02',
-    title: 'Read and understand documents',
-    subtitle: 'Extract text, tables and financial information',
-    desc: 'Automated OCR & parser reconstructs tables, balance sheets, and footnote disclosures with source grounding.',
+    title: 'OCR Ingestion & Reconstruct',
+    subtitle: 'Extract text, tables and footnotes with source grounding',
+    desc: 'High-precision OCR reconstructs complex income statements, balance sheets, and footnote disclosures with source grounding.',
     icon: FileSearch,
-    accent: 'indigo',
+    badge: 'Audit Traceable',
     route: '/documents',
   },
   {
     step: '03',
-    title: 'AI analysis',
-    subtitle: 'Extract KPIs, analyze valuations and identify risks',
-    desc: 'LLM agents extract Revenue, ARR, EBITDA, debt covenants, and flag high-risk operational overhangs.',
+    title: 'AI Intelligence Analysis',
+    subtitle: 'Extract KPIs, calculate valuations and detect risks',
+    desc: 'LLM agents automatically compute Revenue, ARR, EBITDA, debt coverage, and flag operational risks.',
     icon: Brain,
-    accent: 'cyan',
+    badge: 'Zod Schema Validated',
     route: '/analysis',
   },
   {
     step: '04',
-    title: 'Compare quarterly performance',
-    subtitle: 'Previous quarter vs current quarter',
-    desc: 'Automated QoQ trend analysis, MoIC multiple expansions, and budget variance benchmarks.',
+    title: 'Performance Benchmarking',
+    subtitle: 'QoQ trend analysis & MoIC valuation multiple expansions',
+    desc: 'Automated QoQ trend analysis, MoIC multiple expansions, and budget variance benchmarks across portfolio companies.',
     icon: TrendingUp,
-    accent: 'teal',
+    badge: 'MoIC / IRR Engine',
     route: '/kpi-analytics',
   },
   {
     step: '05',
-    title: 'Human review and approval',
-    subtitle: 'Verify AI-extracted information',
-    desc: 'Senior analysts & reviewers audit extracted figures against source files and sign off before publication.',
+    title: 'Dual-Signoff Verification',
+    subtitle: 'Human-in-the-loop review before publication',
+    desc: 'Senior fund analysts & LP compliance reviewers audit every extracted figure against original source files before publishing.',
     icon: ClipboardCheck,
-    accent: 'purple',
+    badge: 'ILPA Standard',
     route: '/reviews',
   },
   {
     step: '06',
-    title: 'Generate investor report',
-    subtitle: 'Download professional PDF',
-    desc: 'One-click generation of investor-ready LP disclosure packets and executive tear-sheets.',
+    title: 'Generate Investor Packets',
+    subtitle: '1-Click institutional PDF LP disclosure packet',
+    desc: 'Export formal, institutional LP packets complete with executive summaries, portfolio valuation tear-sheets, and audit logs.',
     icon: FileDown,
-    accent: 'emerald',
+    badge: 'Institutional PDFKit',
     route: '/reports',
   },
+];
+
+const SAMPLE_PORTFOLIO_ROWS = [
+  { name: 'CloudSync Solutions', sector: 'Enterprise SaaS', inv: '₹375 Cr', val: '₹518 Cr', moic: '1.38x', status: 'Audit Verified' },
+  { name: 'BioPulse Diagnostics', sector: 'HealthTech AI', inv: '₹318 Cr', val: '₹414 Cr', moic: '1.30x', status: 'Signed Off' },
+  { name: 'NexPay Logistics Platform', sector: 'FinTech Rails', inv: '₹435 Cr', val: '₹570 Cr', moic: '1.31x', status: 'Approved' },
 ];
 
 export default function LandingPage() {
   const { user } = useAuth();
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-800 font-sans selection:bg-blue-600 selection:text-white">
+    <div className="min-h-screen bg-[#F8FAFC] text-slate-800 font-sans selection:bg-teal-500 selection:text-white relative overflow-hidden">
       
-      {/* 1. Navigation Bar */}
-      <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200/80">
-        <div className="max-w-7xl mx-auto px-6 h-18 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-700 text-white font-black text-base flex items-center justify-center shadow-md shadow-blue-500/25">
-              AP
-            </div>
-            <div>
-              <span className="font-extrabold text-slate-900 text-base tracking-tight block">
-                APEX HORIZON CAPITAL
-              </span>
-              <span className="text-[10px] text-blue-600 font-bold uppercase tracking-wider block">
-                PE LP Reporting & Intelligence Platform
-              </span>
-            </div>
+      {/* 1. Global Navigation Bar */}
+      <Navbar />
+
+      {/* 2. Hero Section with Ambient Glow & Architectural Grid */}
+      <section className="relative pt-12 pb-20 sm:pt-16 sm:pb-28 lg:pt-24 lg:pb-32 border-b border-slate-200/80 bg-gradient-to-b from-white via-teal-50/25 to-[#F8FAFC]">
+        
+        {/* Behind-the-Screens Ambient Glow Orbs (Visible / Allvue Style) */}
+        <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[750px] max-w-full h-[450px] bg-gradient-to-tr from-teal-200/35 via-cyan-200/25 to-indigo-200/20 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-48 left-1/4 w-[350px] h-[350px] bg-teal-300/15 rounded-full blur-2xl pointer-events-none" />
+        
+        {/* Subtle Micro-Grid Pattern */}
+        <div className="absolute inset-0 bg-grid-fintech opacity-45 pointer-events-none [mask-image:radial-gradient(ellipse_at_center,white,transparent_80%)]" />
+
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+          
+          {/* Eyebrow Badge */}
+          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white/90 border border-teal-200/80 text-teal-800 text-xs font-semibold mb-6 shadow-sm shadow-teal-500/10 backdrop-blur-md">
+            <span className="flex h-2 w-2 relative">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-teal-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-teal-500" />
+            </span>
+            <span className="font-bold tracking-wide">Next-Gen PE LP Reporting Agent</span>
+            <span className="text-slate-300">|</span>
+            <span className="text-slate-500 font-medium">Q3 2026 Reporting Cadence</span>
           </div>
 
-          <div className="flex items-center gap-3 sm:gap-4">
-            {user ? (
-              <Link
-                href="/dashboard"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-xs sm:text-sm font-bold text-white shadow-md shadow-blue-500/20 transition-all"
-              >
-                Go to Dashboard
-                <ArrowRight size={15} />
-              </Link>
-            ) : (
-              <>
-                <Link
-                  href="/login"
-                  className="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-700 hover:text-slate-900 hover:bg-slate-100 transition-colors"
-                >
-                  Sign In
-                </Link>
-                <Link
-                  href="/onboarding"
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-xs sm:text-sm font-bold text-white shadow-md shadow-blue-500/20 transition-all group"
-                >
-                  <span>Start Onboarding</span>
-                  <ArrowRight size={15} className="group-hover:translate-x-0.5 transition-transform" />
-                </Link>
-              </>
-            )}
-          </div>
-        </div>
-      </header>
-
-      {/* 2. Hero Section */}
-      <section className="relative overflow-hidden pt-16 pb-16 lg:pt-20 lg:pb-24 border-b border-slate-200/80 bg-gradient-to-b from-white via-blue-50/20 to-slate-50">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gradient-to-tr from-blue-200/40 via-indigo-100/30 to-cyan-100/30 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute inset-0 bg-[radial-gradient(#cbd5e1_1px,transparent_1px)] [background-size:28px_28px] opacity-35 pointer-events-none" />
-
-        <div className="max-w-5xl mx-auto px-6 relative z-10 text-center">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-semibold mb-6 shadow-xs">
-            <Sparkles size={14} className="text-blue-600" />
-            <span>Institutional AI Document Intelligence</span>
-            <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
-            <span className="text-slate-500 font-normal">Q3 2026 Reporting Cadence</span>
-          </div>
-
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-[1.15] mb-6">
-            Institutional LP Reporting, <br className="hidden sm:inline" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700">
+          {/* Main Hero Headline */}
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-slate-900 tracking-tight leading-[1.1] mb-6">
+            Institutional LP Reporting, <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-600 via-cyan-600 to-indigo-600">
               Reconciled & Audit-Ready in Minutes.
             </span>
           </h1>
 
-          <p className="text-base sm:text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed mb-9 font-normal">
-            Automate ingestion of quarterly portfolio company statements, extract audit-traceable financial KPIs, verify MoIC valuations, and publish investor-grade LP packages with dual-signoff governance.
+          {/* Hero Subtitle */}
+          <p className="text-base sm:text-lg md:text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed mb-10 font-normal">
+            Automate ingestion of quarterly portfolio company filings, extract audit-traceable financial KPIs in Indian Rupees (<strong className="font-semibold text-slate-800">₹</strong>), verify MoIC valuations, and publish investor-grade LP packets with dual-signoff governance.
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 max-w-md mx-auto mb-12">
+          {/* Primary Action Buttons */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 max-w-md mx-auto mb-14">
             <Link
-              href="/onboarding"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-sm font-bold text-white shadow-xl shadow-blue-500/25 transition-all group"
+              href="/customer-onboarding"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-xl bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-500 hover:to-cyan-500 active:scale-[0.99] text-sm font-bold text-white shadow-xl shadow-teal-500/25 transition-all group"
             >
-              <Compass size={17} />
-              <span>Explore Client Onboarding</span>
+              <Compass size={18} />
+              <span>Start Fund Onboarding</span>
               <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
             </Link>
 
             <Link
               href="/login"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-300 text-sm font-bold text-slate-800 shadow-xs transition-all"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-300 text-sm font-bold text-slate-800 shadow-sm transition-all"
             >
-              <Lock size={16} className="text-slate-500" />
-              <span>Institutional Sign In</span>
+              <Lock size={16} className="text-teal-600" />
+              <span>Enter Portal</span>
             </Link>
           </div>
 
-          <div className="flex flex-wrap items-center justify-center gap-6 text-xs text-slate-500">
-            <div className="flex items-center gap-1.5">
-              <ShieldCheck size={16} className="text-emerald-600" />
+          {/* Trust Badges Bar */}
+          <div className="flex flex-wrap items-center justify-center gap-5 sm:gap-8 text-xs text-slate-600 font-medium">
+            <div className="flex items-center gap-1.5 bg-white/80 backdrop-blur-xs px-3 py-1.5 rounded-lg border border-slate-200/60 shadow-xs">
+              <ShieldCheck size={16} className="text-teal-600" />
               <span>ILPA Compliant Disclosures</span>
             </div>
-            <span className="text-slate-300">•</span>
-            <div className="flex items-center gap-1.5">
-              <CheckCircle2 size={16} className="text-blue-600" />
-              <span>SOC2 Type II Certified</span>
+            <div className="flex items-center gap-1.5 bg-white/80 backdrop-blur-xs px-3 py-1.5 rounded-lg border border-slate-200/60 shadow-xs">
+              <CheckCircle2 size={16} className="text-cyan-600" />
+              <span>SOC2 Type II Governance</span>
             </div>
-            <span className="text-slate-300">•</span>
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-1.5 bg-white/80 backdrop-blur-xs px-3 py-1.5 rounded-lg border border-slate-200/60 shadow-xs">
               <Building2 size={16} className="text-indigo-600" />
-              <span>Supporting Flagship Fund IV ($750M)</span>
+              <span>Managing Flagship Fund IV (₹6,250 Cr)</span>
+            </div>
+          </div>
+
+          {/* 3. Interactive Platform Simulation Card (Chronograph / Visible Style) */}
+          <div className="mt-14 sm:mt-18 text-left max-w-5xl mx-auto rounded-2xl sm:rounded-3xl border border-slate-200/90 bg-white/95 backdrop-blur-xl shadow-2xl shadow-slate-300/50 p-4 sm:p-7 transition-all">
+            
+            {/* Window Top Bar */}
+            <div className="flex items-center justify-between pb-4 mb-5 border-b border-slate-100">
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-full bg-rose-400" />
+                <div className="w-3 h-3 rounded-full bg-amber-400" />
+                <div className="w-3 h-3 rounded-full bg-emerald-400" />
+                <span className="ml-2 text-xs font-semibold text-slate-500 hidden sm:inline">
+                  Ricoz Intelligence • Portfolio Monitoring & LP Packet Preview
+                </span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-teal-50 text-teal-700 border border-teal-200">
+                  <Activity size={12} className="text-teal-600" />
+                  Live Sync
+                </span>
+                <span className="text-xs text-slate-400 font-mono">Q3 2026</span>
+              </div>
+            </div>
+
+            {/* KPI Cards Row (In Indian Rupees ₹) */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6">
+              <div className="bg-slate-50/80 rounded-xl p-3.5 border border-slate-200/70">
+                <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Total Fund AUM</p>
+                <p className="text-xl sm:text-2xl font-bold font-mono text-slate-900 mt-1">₹6,250 Cr</p>
+                <p className="text-[11px] text-teal-600 font-medium mt-1">Fund IV Vintage 2024</p>
+              </div>
+
+              <div className="bg-slate-50/80 rounded-xl p-3.5 border border-slate-200/70">
+                <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Current Valuation</p>
+                <p className="text-xl sm:text-2xl font-bold font-mono text-slate-900 mt-1">₹8,450 Cr</p>
+                <p className="text-[11px] text-emerald-600 font-medium mt-1">+18.4% YoY Expansion</p>
+              </div>
+
+              <div className="bg-slate-50/80 rounded-xl p-3.5 border border-slate-200/70">
+                <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Net Portfolio MoIC</p>
+                <p className="text-xl sm:text-2xl font-bold font-mono text-slate-900 mt-1">1.65x</p>
+                <p className="text-[11px] text-cyan-600 font-medium mt-1">Target: 2.2x</p>
+              </div>
+
+              <div className="bg-slate-50/80 rounded-xl p-3.5 border border-slate-200/70">
+                <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Dual-Signoff Status</p>
+                <p className="text-xl sm:text-2xl font-bold text-slate-900 mt-1">100%</p>
+                <p className="text-[11px] text-emerald-600 font-medium mt-1">LP Packet Ready</p>
+              </div>
+            </div>
+
+            {/* Simulated Live Table */}
+            <div className="overflow-x-auto rounded-xl border border-slate-200/80">
+              <table className="w-full text-left text-xs sm:text-sm">
+                <thead className="bg-slate-50/90 text-slate-600 font-semibold uppercase text-[11px] border-b border-slate-200">
+                  <tr>
+                    <th className="py-3 px-4">Portfolio Company</th>
+                    <th className="py-3 px-4 hidden sm:table-cell">Industry Sector</th>
+                    <th className="py-3 px-4">Invested</th>
+                    <th className="py-3 px-4">Marked Valuation</th>
+                    <th className="py-3 px-4 hidden md:table-cell">MoIC</th>
+                    <th className="py-3 px-4">Verification</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100 font-medium">
+                  {SAMPLE_PORTFOLIO_ROWS.map((row) => (
+                    <tr key={row.name} className="hover:bg-teal-50/30 transition-colors">
+                      <td className="py-3 px-4 font-bold text-slate-900 flex items-center gap-2">
+                        <span className="w-2 h-2 rounded-full bg-teal-500" />
+                        {row.name}
+                      </td>
+                      <td className="py-3 px-4 text-slate-500 hidden sm:table-cell">{row.sector}</td>
+                      <td className="py-3 px-4 font-mono font-semibold text-slate-700">{row.inv}</td>
+                      <td className="py-3 px-4 font-mono font-bold text-teal-700">{row.val}</td>
+                      <td className="py-3 px-4 font-mono text-slate-700 hidden md:table-cell">{row.moic}</td>
+                      <td className="py-3 px-4">
+                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 ring-1 ring-inset ring-emerald-600/20">
+                          <Check size={12} />
+                          {row.status}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Bottom Simulation Action Footer */}
+            <div className="mt-4 pt-3 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
+              <span>Grounding: 3 source filings ingested • OCR verified against balance sheets</span>
+              <Link
+                href="/reports"
+                className="inline-flex items-center gap-1.5 font-bold text-teal-600 hover:text-teal-700"
+              >
+                <span>Preview ILPA LP Packet PDF</span>
+                <ChevronRight size={14} />
+              </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 3. Core System Architecture & Workflow Pipeline */}
-      <section className="py-20 px-6 bg-[#070D1D] text-white relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(#1e3a8a_1px,transparent_1px)] [background-size:24px_24px] opacity-20 pointer-events-none" />
+      {/* 4. Core System Architecture & 6-Stage Operating Flow */}
+      <section id="flow" className="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 bg-[#090D18] text-white relative overflow-hidden">
         
-        <div className="max-w-4xl mx-auto relative z-10">
-          <div className="text-center mb-14">
-            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-semibold mb-3">
+        {/* Background glow lines & micro grid */}
+        <div className="absolute inset-0 bg-grid-fintech opacity-15 pointer-events-none" />
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gradient-to-r from-teal-500/10 via-cyan-500/10 to-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
+        
+        <div className="max-w-5xl mx-auto relative z-10">
+          <div className="text-center mb-14 sm:mb-18">
+            <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-teal-500/15 border border-teal-500/30 text-teal-300 text-xs font-semibold mb-4">
+              <Zap size={14} className="text-teal-400" />
               End-to-End Operating Pipeline
             </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
-              How the Platform Operates
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white">
+              The 6-Stage Institutional Workflow
             </h2>
-            <p className="text-slate-400 text-sm sm:text-base mt-2 max-w-xl mx-auto">
-              Every document uploaded to this site follows this strict 6-stage institutional workflow from ingestion to signed LP pack.
+            <p className="text-slate-400 text-sm sm:text-base mt-3 max-w-2xl mx-auto leading-relaxed">
+              Every document uploaded to Ricoz follows this strict, audit-grounded sequence from ingestion to approved LP packet generation.
             </p>
           </div>
 
-          {/* Sequential 6-Stage Process Column */}
+          {/* Sequential 6-Stage Process Cards */}
           <div className="space-y-4">
             {OPERATING_FLOW_STEPS.map((item, idx) => {
               const Icon = item.icon;
               const isLast = idx === OPERATING_FLOW_STEPS.length - 1;
               return (
                 <div key={item.step} className="flex flex-col items-center">
+                  
                   {/* Step Card */}
-                  <div className="w-full bg-[#0D152A] border border-slate-800 hover:border-blue-500/60 rounded-2xl p-5 sm:p-6 transition-all duration-200 group shadow-lg">
-                    <div className="flex items-start sm:items-center justify-between gap-4">
+                  <div className="w-full bg-[#0E1526]/90 border border-slate-800/90 hover:border-teal-500/50 rounded-2xl p-5 sm:p-6 transition-all duration-200 group shadow-lg hover:shadow-teal-500/10">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                      
                       <div className="flex items-start sm:items-center gap-4">
-                        <div className="h-12 w-12 rounded-xl bg-blue-600/15 border border-blue-500/30 text-blue-400 flex items-center justify-center shrink-0 group-hover:scale-105 group-hover:bg-blue-600/25 transition-all">
+                        <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-teal-500/20 to-cyan-500/20 border border-teal-500/30 text-teal-400 flex items-center justify-center shrink-0 group-hover:scale-105 group-hover:bg-teal-500/30 transition-all">
                           <Icon size={24} />
                         </div>
                         <div>
                           <div className="flex items-center gap-2.5">
-                            <span className="text-[11px] font-bold uppercase tracking-wider text-blue-400">
+                            <span className="text-[10px] font-bold uppercase tracking-wider text-teal-400 px-2 py-0.5 rounded-md bg-teal-950/70 border border-teal-800/60">
                               Stage {item.step}
                             </span>
+                            <span className="text-[11px] font-medium text-slate-400">
+                              {item.badge}
+                            </span>
                           </div>
-                          <h3 className="text-base sm:text-lg font-bold text-white tracking-tight mt-0.5">
+                          <h3 className="text-base sm:text-lg font-bold text-white tracking-tight mt-1">
                             {item.title}
                           </h3>
-                          <p className="text-xs sm:text-sm text-slate-300 font-medium">
+                          <p className="text-xs sm:text-sm text-slate-300 font-medium mt-0.5">
                             {item.subtitle}
                           </p>
-                          <p className="text-xs text-slate-400 mt-1.5 leading-relaxed">
+                          <p className="text-xs text-slate-400 mt-1.5 leading-relaxed max-w-2xl">
                             {item.desc}
                           </p>
                         </div>
@@ -251,7 +338,7 @@ export default function LandingPage() {
 
                       <Link
                         href={user ? item.route : '/login'}
-                        className="shrink-0 hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-blue-600 text-slate-300 hover:text-white text-xs font-semibold transition-colors"
+                        className="self-start sm:self-center shrink-0 inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-slate-800/80 hover:bg-teal-600 text-slate-300 hover:text-white text-xs font-semibold transition-all border border-slate-700/60 hover:border-teal-500"
                       >
                         <span>Open {item.route.replace('/', '')}</span>
                         <ChevronRight size={14} />
@@ -261,7 +348,7 @@ export default function LandingPage() {
 
                   {/* Connecting Arrow */}
                   {!isLast && (
-                    <div className="py-2 text-blue-500/70 flex items-center justify-center">
+                    <div className="py-2.5 text-teal-400/60 flex items-center justify-center">
                       <ArrowDown size={18} className="animate-pulse" />
                     </div>
                   )}
@@ -272,61 +359,65 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* 4. Onboarding Walkthrough Teaser */}
-      <section className="py-16 px-6 bg-gradient-to-b from-slate-50 to-blue-50/40 border-b border-slate-200">
-        <div className="max-w-5xl mx-auto bg-white rounded-3xl border border-slate-200/90 shadow-xl shadow-slate-200/60 p-8 sm:p-12">
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
-            <div className="max-w-xl">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-blue-100 text-blue-700 text-xs font-bold uppercase tracking-wider mb-3">
-                Customer Setup
+      {/* 5. Onboarding Call To Action */}
+      <section className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-[#F8FAFC] to-teal-50/30 border-b border-slate-200">
+        <div className="max-w-5xl mx-auto bg-white rounded-3xl border border-slate-200/90 shadow-xl shadow-slate-200/60 p-6 sm:p-10 md:p-12 relative overflow-hidden">
+          
+          <div className="absolute top-0 right-0 w-80 h-80 bg-teal-100/40 rounded-full blur-3xl pointer-events-none" />
+
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-8 relative z-10">
+            <div className="max-w-xl text-left">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-teal-50 text-teal-700 text-xs font-bold uppercase tracking-wider mb-3.5 border border-teal-200">
+                Institutional Fund Setup
               </div>
-              <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mb-3">
+              <h3 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight mb-3.5">
                 Ready to Onboard Your Fund?
               </h3>
-              <p className="text-sm text-slate-600 leading-relaxed mb-6">
-                Walk through our 4-step wizard to define your fund strategy, set disclosure KPI triggers, ingest sample filings, and experience live AI-powered LP packet generation.
+              <p className="text-sm sm:text-base text-slate-600 leading-relaxed mb-8">
+                Walk through our 4-step setup wizard to configure your fund vehicle, establish reporting covenants in Indian Rupees (₹), ingest portfolio filings, and generate your first LP packet.
               </p>
               
-              <div className="flex items-center gap-3">
+              <div className="flex flex-wrap items-center gap-3">
                 <Link
-                  href="/onboarding"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-xs sm:text-sm font-bold text-white shadow-md shadow-blue-500/20 transition-all"
+                  href="/customer-onboarding"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-500 hover:to-cyan-500 text-sm font-bold text-white shadow-md shadow-teal-500/25 transition-all"
                 >
                   <span>Launch Onboarding Wizard</span>
                   <ChevronRight size={16} />
                 </Link>
                 <Link
                   href="/register"
-                  className="px-4 py-2.5 rounded-xl border border-slate-300 text-xs sm:text-sm font-bold text-slate-700 hover:bg-slate-50 transition-colors"
+                  className="px-5 py-3 rounded-xl border border-slate-300 text-sm font-bold text-slate-700 hover:bg-slate-50 transition-colors"
                 >
                   Create Account
                 </Link>
               </div>
             </div>
 
-            <div className="w-full lg:w-auto shrink-0 bg-slate-50 border border-slate-200 p-5 rounded-2xl space-y-3">
-              <div className="flex items-center gap-3 text-xs font-semibold text-slate-700">
-                <div className="h-6 w-6 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-[11px]">1</div>
-                <span>Configure Fund Vehicle & Target Size</span>
+            {/* Checklist Box */}
+            <div className="w-full lg:w-auto shrink-0 bg-slate-50/80 border border-slate-200 p-6 rounded-2xl space-y-3.5">
+              <div className="flex items-center gap-3 text-xs sm:text-sm font-semibold text-slate-700">
+                <div className="h-6 w-6 rounded-full bg-teal-600 text-white flex items-center justify-center font-bold text-xs">1</div>
+                <span>Configure Fund Vehicle & Target (₹ Cr)</span>
               </div>
-              <div className="flex items-center gap-3 text-xs font-semibold text-slate-700">
-                <div className="h-6 w-6 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-[11px]">2</div>
+              <div className="flex items-center gap-3 text-xs sm:text-sm font-semibold text-slate-700">
+                <div className="h-6 w-6 rounded-full bg-teal-600 text-white flex items-center justify-center font-bold text-xs">2</div>
                 <span>Select Reporting KPIs & Covenants</span>
               </div>
-              <div className="flex items-center gap-3 text-xs font-semibold text-slate-700">
-                <div className="h-6 w-6 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-[11px]">3</div>
+              <div className="flex items-center gap-3 text-xs sm:text-sm font-semibold text-slate-700">
+                <div className="h-6 w-6 rounded-full bg-teal-600 text-white flex items-center justify-center font-bold text-xs">3</div>
                 <span>Ingest Quarterly Portfolio Filings</span>
               </div>
-              <div className="flex items-center gap-3 text-xs font-semibold text-slate-700">
-                <div className="h-6 w-6 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-[11px]">✓</div>
-                <span>Review & Launch Reporting Workspace</span>
+              <div className="flex items-center gap-3 text-xs sm:text-sm font-semibold text-slate-700">
+                <div className="h-6 w-6 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-xs">✓</div>
+                <span>Dual-Review & Publish LP Packets</span>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 5. Institutional Footer */}
+      {/* 6. Footer */}
       <Footer />
 
     </div>

@@ -57,35 +57,35 @@ export default function DashboardPage() {
   }
 
   function formatCurrency(num) {
-    if (num === null || num === undefined) return '$0';
-    if (num >= 1e9) return `$${(num / 1e9).toFixed(1)}B`;
-    if (num >= 1e6) return `$${(num / 1e6).toFixed(1)}M`;
-    if (num >= 1e3) return `$${(num / 1e3).toFixed(1)}K`;
-    return `$${Number(num).toLocaleString()}`;
+    if (num === null || num === undefined) return '₹0';
+    if (num >= 1e7) return `₹${(num / 1e7).toFixed(1)} Cr`;
+    if (num >= 1e5) return `₹${(num / 1e5).toFixed(1)} L`;
+    if (num >= 1e3) return `₹${(num / 1e3).toFixed(1)}K`;
+    return `₹${Number(num).toLocaleString('en-IN')}`;
   }
 
   return (
-    <div className="flex min-h-screen bg-gray-50">
+    <div className="flex min-h-screen bg-[#F8FAFC]">
       <Sidebar />
       <main className="flex-1 min-w-0 lg:ml-[260px] px-4 pt-20 pb-8 sm:px-6 lg:p-8">
         {/* Header */}
-        <div className="mb-8 flex items-center justify-between">
+        <div className="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">Portfolio Overview</h1>
-            <p className="text-sm text-gray-500">
+            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900">Portfolio Overview</h1>
+            <p className="text-sm text-slate-500 mt-1">
               Institutional PE LP Reporting • Q3 2026 Reporting Cadence
             </p>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-2.5 sm:gap-3">
             <Link
               href="/documents"
-              className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition shadow-sm"
+              className="px-4 py-2 bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-500 hover:to-cyan-500 text-white rounded-xl text-sm font-semibold transition shadow-sm shadow-teal-500/20"
             >
               Upload Quarterly Report
             </Link>
             <Link
               href="/reports"
-              className="px-4 py-2 bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 rounded-lg text-sm font-medium transition shadow-sm"
+              className="px-4 py-2 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 rounded-xl text-sm font-semibold transition shadow-xs"
             >
               Generate LP Packet
             </Link>

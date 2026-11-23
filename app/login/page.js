@@ -85,24 +85,24 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen w-full flex flex-col justify-center items-center px-4 py-12 bg-gradient-to-b from-slate-50 via-blue-50/30 to-slate-100 relative font-sans text-slate-800 antialiased selection:bg-blue-600 selection:text-white">
+    <div className="min-h-screen w-full flex flex-col justify-center items-center px-4 py-12 bg-gradient-to-b from-slate-50 via-teal-50/20 to-slate-100 relative font-sans text-slate-800 antialiased selection:bg-teal-500 selection:text-white">
       
       {/* Subtle background ambient mesh */}
       <div className="absolute inset-0 bg-[radial-gradient(#cbd5e1_1px,transparent_1px)] [background-size:24px_24px] opacity-40 pointer-events-none" />
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-100/60 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-teal-100/40 rounded-full blur-3xl pointer-events-none" />
 
       {/* Main Centered Login Container */}
       <div className="w-full max-w-[480px] relative z-10">
         
         {/* Top Institutional Brand Header */}
         <div className="text-center mb-6">
-          <div className="inline-flex items-center justify-center h-12 w-12 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-700 text-white font-black text-xl shadow-lg shadow-blue-500/25 mb-3">
+          <div className="inline-flex items-center justify-center h-12 w-12 rounded-2xl bg-gradient-to-br from-teal-500 via-cyan-600 to-indigo-600 text-white font-black text-xl shadow-lg shadow-teal-500/25 mb-3">
             AP
           </div>
           <h1 className="text-xl font-bold tracking-tight text-slate-900">
             APEX HORIZON CAPITAL
           </h1>
-          <p className="text-xs text-blue-600 font-semibold tracking-wide uppercase mt-0.5">
+          <p className="text-xs text-teal-600 font-semibold tracking-wide uppercase mt-0.5">
             LP Reporting & Intelligence Portal
           </p>
         </div>
@@ -124,7 +124,7 @@ export default function LoginPage() {
               <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
                 Fast Demo Role Selection
               </span>
-              <span className="text-[11px] text-blue-600 font-semibold">1-Click Auto-Fill</span>
+              <span className="text-[11px] text-teal-600 font-semibold">1-Click Auto-Fill</span>
             </div>
 
             <div className="grid grid-cols-3 gap-2.5">
@@ -137,18 +137,18 @@ export default function LoginPage() {
                     onClick={() => handleSelectDemo(acc)}
                     className={`p-3 rounded-xl text-left border transition-all cursor-pointer ${
                       isSelected
-                        ? 'bg-blue-50/70 border-blue-500 text-slate-900 shadow-sm ring-2 ring-blue-500/20'
+                        ? 'bg-teal-50/70 border-teal-500 text-slate-900 shadow-sm ring-2 ring-teal-500/20'
                         : 'bg-slate-50/60 border-slate-200 hover:border-slate-300 hover:bg-slate-50 text-slate-700'
                     }`}
                   >
                     <div className="flex items-center justify-between mb-1">
                       <span className="text-xs font-bold text-slate-900">{acc.role}</span>
                       {isSelected && (
-                        <CheckCircle2 size={13} className="text-blue-600 shrink-0" />
+                        <CheckCircle2 size={13} className="text-teal-600 shrink-0" />
                       )}
                     </div>
                     <div className="text-xs text-slate-500">{acc.name}</div>
-                    <div className="text-[10px] text-blue-600 font-medium tracking-tight mt-1 truncate">
+                    <div className="text-[10px] text-teal-600 font-medium tracking-tight mt-1 truncate">
                       {acc.tag}
                     </div>
                   </button>
@@ -182,7 +182,7 @@ export default function LoginPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="analyst@apexpe.com"
-                  className="w-full rounded-xl bg-slate-50/60 border border-slate-200 pl-10 pr-4 py-2.5 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-blue-600 focus:ring-4 focus:ring-blue-100 transition-all"
+                  className="w-full rounded-xl bg-slate-50/60 border border-slate-200 pl-10 pr-4 py-2.5 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-teal-600 focus:ring-4 focus:ring-teal-100 transition-all"
                 />
               </div>
             </div>
@@ -202,7 +202,7 @@ export default function LoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••••••"
-                  className="w-full rounded-xl bg-slate-50/60 border border-slate-200 pl-10 pr-10 py-2.5 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-blue-600 focus:ring-4 focus:ring-blue-100 transition-all"
+                  className="w-full rounded-xl bg-slate-50/60 border border-slate-200 pl-10 pr-10 py-2.5 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-teal-600 focus:ring-4 focus:ring-teal-100 transition-all"
                 />
                 <button
                   type="button"
@@ -219,7 +219,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={submitting}
-              className="w-full mt-2 flex items-center justify-center gap-2 rounded-xl bg-blue-600 hover:bg-blue-700 active:bg-blue-800 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-500/25 transition-all disabled:opacity-50 disabled:cursor-not-allowed group cursor-pointer"
+              className="w-full mt-2 flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-500 hover:to-cyan-500 active:from-teal-700 active:to-cyan-700 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-teal-500/25 transition-all disabled:opacity-50 disabled:cursor-not-allowed group cursor-pointer"
             >
               {submitting ? (
                 <div className="flex items-center gap-2">
@@ -242,7 +242,7 @@ export default function LoginPage() {
               New fund analyst or LP reviewer?{' '}
               <Link
                 href="/register"
-                className="font-semibold text-blue-600 hover:text-blue-700 transition-colors hover:underline"
+                className="font-semibold text-teal-600 hover:text-teal-700 transition-colors hover:underline"
               >
                 Register Account
               </Link>
