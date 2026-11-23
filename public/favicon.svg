@@ -1,27 +1,53 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
   <defs>
-    <linearGradient id="pe-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#2563EB" />
-      <stop offset="50%" stop-color="#1D4ED8" />
-      <stop offset="100%" stop-color="#312E81" />
+    <linearGradient id="tile-border" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2DD4BF" />
+      <stop offset="50%" stop-color="#06B6D4" />
+      <stop offset="100%" stop-color="#6366F1" />
     </linearGradient>
-    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
-      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.3" flood-color="#0F172A" />
-    </filter>
+    <radialGradient id="tile-ambient" cx="50%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#0E7490" stop-opacity="0.5" />
+      <stop offset="100%" stop-color="#0A0E1A" stop-opacity="1" />
+    </radialGradient>
   </defs>
-  <!-- Background Rounded Shield / Tile -->
-  <rect width="64" height="64" rx="16" fill="url(#pe-gradient)" filter="url(#shadow)"/>
-  
-  <!-- Subtle border highlight -->
-  <rect x="1" y="1" width="62" height="62" rx="15" fill="none" stroke="rgba(255,255,255,0.22)" stroke-width="1.5" />
 
-  <!-- Trend / Performance Line & Node Accent -->
-  <path d="M14 44 L26 34 L36 40 L50 20" fill="none" stroke="#60A5FA" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="0.4" />
-  <circle cx="50" cy="20" r="3" fill="#38BDF8" opacity="0.8" />
+  <!-- Outer Rounded Tile Border -->
+  <rect width="64" height="64" rx="16" fill="url(#tile-border)" />
 
-  <!-- Apex Institutional Monogram (AP) -->
-  <text x="32" y="42" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="28" font-weight="900" fill="#FFFFFF" text-anchor="middle" letter-spacing="-1">
-    AP
-  </text>
+  <!-- Inner Dark Obsidian Tile -->
+  <rect x="2" y="2" width="60" height="60" rx="14" fill="url(#tile-ambient)" />
+
+  <!-- Left Facet: Vibrant Mint Teal -->
+  <path
+    d="M32 9L12 43C11 45 12.4 47.5 14.6 47.5H25L32 34L27 19L32 9Z"
+    fill="#2DD4BF"
+  />
+
+  <!-- Right Facet: Vibrant Electric Cyan -->
+  <path
+    d="M32 9L52 43C53 45 51.6 47.5 49.4 47.5H39L32 34L37 19L32 9Z"
+    fill="#06B6D4"
+  />
+
+  <!-- Center Core Keystone Prism: Electric Indigo -->
+  <polygon
+    points="32,16 39,30 32,44 25,30"
+    fill="#6366F1"
+  />
+
+  <!-- Upward Trend Arrow Apex: Pure White -->
+  <path
+    d="M32 18L37 28H27L32 18Z"
+    fill="#FFFFFF"
+  />
+
+  <!-- Foundation Bar -->
+  <rect
+    x="20"
+    y="51"
+    width="24"
+    height="3"
+    rx="1.5"
+    fill="#2DD4BF"
+  />
 </svg>
-
