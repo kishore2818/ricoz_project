@@ -92,12 +92,12 @@ export default function KPIAnalyticsPage() {
             </p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-3">
-            <div>
+          <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-2.5 sm:gap-3 w-full sm:w-auto">
+            <div className="w-full sm:w-auto">
               <select
                 value={metricName}
                 onChange={(e) => setMetricName(e.target.value)}
-                className="px-3 py-2 border border-gray-300 rounded-lg text-sm bg-white font-semibold text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full sm:w-auto px-3 py-2 border border-gray-300 rounded-xl text-sm bg-white font-semibold text-gray-800 focus:outline-none focus:ring-2 focus:ring-teal-500"
               >
                 {METRIC_OPTIONS.map((m) => (
                   <option key={m} value={m}>
@@ -107,11 +107,11 @@ export default function KPIAnalyticsPage() {
               </select>
             </div>
 
-            <div>
+            <div className="w-full sm:w-auto">
               <select
                 value={selectedFundId}
                 onChange={(e) => setSelectedFundId(e.target.value)}
-                className="px-3 py-2 border border-gray-300 rounded-lg text-sm bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full sm:w-auto px-3 py-2 border border-gray-300 rounded-xl text-sm bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-teal-500"
               >
                 <option value="">All PE Funds</option>
                 {funds.map((f) => (
@@ -137,7 +137,7 @@ export default function KPIAnalyticsPage() {
             {/* Chart */}
             <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
               <h2 className="text-base font-bold text-gray-900 mb-4">
-                {metricName} Comparison {metricName.includes('Count') ? '(Count)' : '($ Millions)'}
+                {metricName} Comparison {metricName.includes('Count') ? '(Count)' : '(₹ Cr)'}
               </h2>
 
               {chartData.length === 0 ? (
@@ -153,7 +153,7 @@ export default function KPIAnalyticsPage() {
                       <YAxis stroke="#64748b" fontSize={12} />
                       <Tooltip
                         formatter={(val) => [
-                          metricName.includes('Count') ? val : `$${val}M`,
+                          metricName.includes('Count') ? val : `₹${val} Cr`,
                           metricName
                         ]}
                       />

@@ -5,7 +5,7 @@ import { ShieldCheck } from 'lucide-react';
 export default function Footer() {
   return (
     <footer className="bg-white border-t border-slate-200">
-      <div className="max-w-7xl mx-auto px-6 py-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
         {/* Three columns */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mb-8">
           {/* Brand */}
@@ -33,7 +33,7 @@ export default function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-gray-600 hover:text-blue-600 transition-colors"
+                    className="text-sm text-gray-600 hover:text-teal-600 transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -49,17 +49,17 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2">
               <li>
-                <Link href="/privacy" className="text-sm text-gray-600 hover:text-blue-600 transition-colors">
+                <Link href="/privacy" className="text-sm text-gray-600 hover:text-teal-600 transition-colors">
                   Privacy Policy
                 </Link>
               </li>
               <li>
-                <Link href="/terms" className="text-sm text-gray-600 hover:text-blue-600 transition-colors">
+                <Link href="/terms" className="text-sm text-gray-600 hover:text-teal-600 transition-colors">
                   Terms of Service
                 </Link>
               </li>
               <li>
-                <a href="mailto:support@apexhorizon.com" className="text-sm text-gray-600 hover:text-blue-600 transition-colors">
+                <a href="mailto:support@apexhorizon.com" className="text-sm text-gray-600 hover:text-teal-600 transition-colors">
                   Contact Support
                 </a>
               </li>

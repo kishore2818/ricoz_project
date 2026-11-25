@@ -201,7 +201,7 @@ export default function LandingPage() {
             </div>
 
             {/* KPI Cards Row (In Indian Rupees ₹) */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6">
               <div className="bg-slate-50/80 rounded-xl p-3.5 border border-slate-200/70">
                 <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Total Fund AUM</p>
                 <p className="text-xl sm:text-2xl font-bold font-mono text-slate-900 mt-1">₹6,250 Cr</p>
@@ -377,17 +377,17 @@ export default function LandingPage() {
                 Walk through our 4-step setup wizard to configure your fund vehicle, establish reporting covenants in Indian Rupees (₹), ingest portfolio filings, and generate your first LP packet.
               </p>
               
-              <div className="flex flex-wrap items-center gap-3">
+              <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3">
                 <Link
                   href="/customer-onboarding"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-500 hover:to-cyan-500 text-sm font-bold text-white shadow-md shadow-teal-500/25 transition-all"
+                  className="w-full sm:w-auto justify-center inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-500 hover:to-cyan-500 text-sm font-bold text-white shadow-md shadow-teal-500/25 transition-all text-center"
                 >
                   <span>Launch Onboarding Wizard</span>
                   <ChevronRight size={16} />
                 </Link>
                 <Link
                   href="/register"
-                  className="px-5 py-3 rounded-xl border border-slate-300 text-sm font-bold text-slate-700 hover:bg-slate-50 transition-colors"
+                  className="w-full sm:w-auto justify-center text-center px-5 py-3 rounded-xl border border-slate-300 text-sm font-bold text-slate-700 hover:bg-slate-50 transition-colors"
                 >
                   Create Account
                 </Link>

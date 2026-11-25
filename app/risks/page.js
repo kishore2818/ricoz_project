@@ -49,11 +49,11 @@ export default function RisksPage() {
             </p>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="w-full sm:w-auto">
             <select
               value={filterSeverity}
               onChange={(e) => setFilterSeverity(e.target.value)}
-              className="px-3 py-2 border border-gray-300 rounded-lg text-sm bg-white font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full sm:w-auto px-3 py-2 border border-gray-300 rounded-xl text-sm bg-white font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-teal-500"
             >
               <option value="">All Severities</option>
               <option value="High">High Severity</option>

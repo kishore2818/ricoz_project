@@ -187,14 +187,14 @@ export default function OnboardingPage() {
           </div>
 
           {/* 4-Step Progress Indicator */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8 relative z-10">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 mb-8 relative z-10">
             {STEPS.map(step => {
               const isDone = currentStep > step.id;
               const isCurrent = currentStep === step.id;
               return (
                 <div
                   key={step.id}
-                  className={`p-3.5 rounded-xl border transition-all ${
+                  className={`p-2.5 sm:p-3.5 rounded-xl border transition-all ${
                     isCurrent
                       ? 'bg-white border-teal-500 shadow-md shadow-teal-500/10 ring-2 ring-teal-500/20'
                       : isDone
@@ -203,24 +203,24 @@ export default function OnboardingPage() {
                   }`}
                 >
                   <div className="flex items-center justify-between mb-1.5">
-                    <span className={`text-[11px] font-bold uppercase tracking-wider ${isCurrent ? 'text-teal-700' : isDone ? 'text-slate-600' : 'text-slate-400'}`}>
+                    <span className={`text-[10px] sm:text-[11px] font-bold uppercase tracking-wider ${isCurrent ? 'text-teal-700' : isDone ? 'text-slate-600' : 'text-slate-400'}`}>
                       Step {step.id}
                     </span>
                     {isDone ? (
-                      <CheckCircle2 size={16} className="text-teal-600" />
+                      <CheckCircle2 size={15} className="text-teal-600" />
                     ) : (
                       <span className={`h-2 w-2 rounded-full ${isCurrent ? 'bg-teal-600 animate-pulse' : 'bg-slate-300'}`} />
                     )}
                   </div>
-                  <div className="text-sm font-bold text-slate-900">{step.title}</div>
-                  <div className="text-[11px] text-slate-500 truncate">{step.desc}</div>
+                  <div className="text-xs sm:text-sm font-bold text-slate-900 truncate">{step.title}</div>
+                  <div className="text-[10px] sm:text-[11px] text-slate-500 truncate">{step.desc}</div>
                 </div>
               );
             })}
           </div>
 
           {/* Step Content Card */}
-          <div className="bg-white rounded-2xl border border-slate-200/90 shadow-xl shadow-slate-200/50 p-6 sm:p-10 mb-8 transition-all relative z-10">
+          <div className="bg-white rounded-2xl border border-slate-200/90 shadow-xl shadow-slate-200/50 p-5 sm:p-10 mb-8 transition-all relative z-10">
             
             {/* STEP 1: Fund Vehicle Configuration */}
             {currentStep === 1 && (
@@ -511,12 +511,12 @@ export default function OnboardingPage() {
             )}
 
             {/* Stepper Navigation Footer Buttons */}
-            <div className="flex items-center justify-between pt-6 border-t border-slate-100 mt-8">
+            <div className="flex flex-col-reverse sm:flex-row items-center justify-between gap-3 pt-6 border-t border-slate-100 mt-8">
               {currentStep > 1 ? (
                 <button
                   type="button"
                   onClick={handleBack}
-                  className="flex items-center gap-2 px-4 py-2.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-600 hover:bg-slate-50 transition-colors cursor-pointer"
+                  className="w-full sm:w-auto justify-center flex items-center gap-2 px-4 py-2.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-600 hover:bg-slate-50 transition-colors cursor-pointer"
                 >
                   <ArrowLeft size={16} />
                   <span>Previous Step</span>
@@ -529,7 +529,7 @@ export default function OnboardingPage() {
                 type="button"
                 onClick={handleNext}
                 disabled={completing}
-                className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-500 hover:to-cyan-500 text-xs font-bold text-white shadow-lg shadow-teal-500/25 transition-all cursor-pointer group"
+                className="w-full sm:w-auto justify-center flex items-center gap-2 px-6 py-2.5 rounded-xl bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-500 hover:to-cyan-500 text-xs font-bold text-white shadow-lg shadow-teal-500/25 transition-all cursor-pointer group"
               >
                 {completing ? (
                   <div className="flex items-center gap-2">

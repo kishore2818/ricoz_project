@@ -120,6 +120,15 @@ html {
 .toast-enter { animation: toast-in 0.3s ease-out forwards; }
 .toast-exit  { animation: toast-out 0.3s ease-in forwards; }
 
+/* Utility to hide scrollbars on horizontal tabs/pills while retaining touch swipe */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 /* Page transition */
 @keyframes fade-in {
   from { opacity: 0; transform: translateY(4px); }

@@ -51,7 +51,7 @@ export default function CompanyDetailPage() {
 
   const chartData = (data?.valuations || []).map(v => ({
     period: `${v.reportingQuarter} '${String(v.reportingYear).slice(-2)}`,
-    valuation: v.currentValuation / 1e6
+    valuation: Number((v.currentValuation / 1e7).toFixed(1))
   }));
 
   return (
@@ -76,8 +76,8 @@ export default function CompanyDetailPage() {
         ) : (
           <div className="space-y-8">
             {/* Header Card */}
-            <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
+            <div className="bg-white rounded-xl border border-gray-200 p-5 sm:p-6 shadow-sm">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
                 <div>
                   <div className="flex items-center gap-3 mb-1">
                     <span className="text-xs font-semibold bg-gray-100 text-gray-700 px-2.5 py-0.5 rounded">
@@ -85,15 +85,15 @@ export default function CompanyDetailPage() {
                     </span>
                     <StatusBadge status={data.reportingStatus} size="sm" />
                   </div>
-                  <h1 className="text-2xl font-bold text-gray-900">{data.name}</h1>
+                  <h1 className="text-xl sm:text-2xl font-bold text-gray-900">{data.name}</h1>
                   <p className="text-xs text-gray-500 mt-0.5">
                     Fund: {data.fundId?.name} ({data.fundId?.identifier})
                   </p>
                 </div>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3 w-full sm:w-auto">
                   <Link
                     href={`/documents?companyId=${data._id}`}
-                    className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition shadow-sm"
+                    className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2 bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-500 hover:to-cyan-500 text-white rounded-xl text-sm font-semibold transition shadow-sm"
                   >
                     <UploadCloud className="w-4 h-4" /> Upload Report
                   </Link>
@@ -104,7 +104,7 @@ export default function CompanyDetailPage() {
                 {data.description || 'No description available for this portfolio asset.'}
               </p>
 
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4 bg-gray-50 rounded-lg text-xs">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 p-4 bg-gray-50 rounded-xl text-xs">
                 <div>
                   <span className="text-gray-400">Initial Investment</span>
                   <p className="text-sm font-bold text-gray-900">
@@ -136,7 +136,7 @@ export default function CompanyDetailPage() {
             {chartData.length > 0 && (
               <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
                 <h2 className="text-base font-bold text-gray-900 mb-4">
-                  Valuation Trajectory ($ Millions)
+                  Valuation Trajectory (₹ Crores)
                 </h2>
                 <div className="h-64 w-full">
                   <ResponsiveContainer width="100%" height="100%">
@@ -144,11 +144,11 @@ export default function CompanyDetailPage() {
                       <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
                       <XAxis dataKey="period" stroke="#94a3b8" fontSize={12} />
                       <YAxis stroke="#94a3b8" fontSize={12} />
-                      <Tooltip formatter={(val) => [`$${val}M`, 'Valuation']} />
+                      <Tooltip formatter={(val) => [`₹${val} Cr`, 'Valuation']} />
                       <Line
                         type="monotone"
                         dataKey="valuation"
-                        stroke="#2563eb"
+                        stroke="#0D9488"
                         strokeWidth={3}
                         dot={{ r: 5 }}
                       />

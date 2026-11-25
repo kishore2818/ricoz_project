@@ -104,7 +104,7 @@ export default function ReportsPage() {
     <div className="flex min-h-screen bg-gray-50">
       <Sidebar />
       <main className="flex-1 min-w-0 lg:ml-[260px] px-4 pt-20 pb-8 sm:px-6 lg:p-8">
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
           <div>
             <h1 className="text-2xl font-bold text-gray-900">Institutional LP Investor Packets</h1>
             <p className="text-sm text-gray-500">
@@ -113,7 +113,7 @@ export default function ReportsPage() {
           </div>
           <button
             onClick={() => setShowModal(true)}
-            className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition shadow-sm"
+            className="flex items-center justify-center gap-2 px-4 py-2 bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-500 hover:to-cyan-500 text-white rounded-xl text-sm font-semibold transition shadow-sm w-full sm:w-auto"
           >
             <Plus className="w-4 h-4" /> Generate LP Packet
           </button>
@@ -187,7 +187,7 @@ export default function ReportsPage() {
         {/* Generate Modal */}
         {showModal && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-            <div className="bg-white rounded-xl max-w-lg w-full p-6 shadow-xl relative">
+            <div className="bg-white rounded-xl max-w-lg w-full p-5 sm:p-6 shadow-xl relative max-h-[90vh] overflow-y-auto">
               <button
                 onClick={() => setShowModal(false)}
                 className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
@@ -213,7 +213,7 @@ export default function ReportsPage() {
                         title: selFund ? `${selFund.name} — ${form.reportingQuarter} ${form.reportingYear} LP Quarterly Investor Packet` : form.title
                       });
                     }}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
                   >
                     {funds.map((f) => (
                       <option key={f._id} value={f._id}>
@@ -223,7 +223,7 @@ export default function ReportsPage() {
                   </select>
                 </div>
 
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
                     <label className="block text-xs font-semibold text-gray-700 mb-1">
                       Quarter *
@@ -231,7 +231,7 @@ export default function ReportsPage() {
                     <select
                       value={form.reportingQuarter}
                       onChange={(e) => setForm({ ...form, reportingQuarter: e.target.value })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
                     >
                       <option value="Q1">Q1</option>
                       <option value="Q2">Q2</option>
@@ -248,7 +248,7 @@ export default function ReportsPage() {
                       required
                       value={form.reportingYear}
                       onChange={(e) => setForm({ ...form, reportingYear: e.target.value })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
                     />
                   </div>
                 </div>
@@ -262,7 +262,7 @@ export default function ReportsPage() {
                     required
                     value={form.title}
                     onChange={(e) => setForm({ ...form, title: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
                   />
                 </div>
 
@@ -273,25 +273,25 @@ export default function ReportsPage() {
                   <select
                     value={form.status}
                     onChange={(e) => setForm({ ...form, status: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
                   >
                     <option value="Approved">Approved (Final LP Release)</option>
                     <option value="Draft">Draft (Internal Review Only)</option>
                   </select>
                 </div>
 
-                <div className="flex justify-end gap-2 pt-2">
+                <div className="flex flex-col-reverse sm:flex-row justify-end gap-2 pt-2">
                   <button
                     type="button"
                     onClick={() => setShowModal(false)}
-                    className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg text-sm"
+                    className="px-4 py-2 border border-gray-300 text-gray-700 rounded-xl text-sm font-medium w-full sm:w-auto"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
                     disabled={generating}
-                    className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium"
+                    className="px-4 py-2 bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-500 hover:to-cyan-500 text-white rounded-xl text-sm font-semibold transition shadow-sm w-full sm:w-auto"
                   >
                     {generating ? 'Compiling PDF Packet...' : 'Compile & Generate PDF'}
                   </button>

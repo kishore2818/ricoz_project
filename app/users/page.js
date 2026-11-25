@@ -163,7 +163,7 @@ export default function UsersPage() {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
           <div>
             <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2.5">
-              <Shield className="text-blue-600" size={24} />
+              <Shield className="text-teal-600" size={24} />
               User & RBAC Administration
             </h1>
             <p className="text-sm text-gray-500 mt-0.5">
@@ -176,7 +176,7 @@ export default function UsersPage() {
               setFormSuccess('');
               setShowModal(true);
             }}
-            className="inline-flex items-center gap-2 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-sm font-bold shadow-md shadow-blue-500/20 transition-all cursor-pointer self-start sm:self-auto"
+            className="inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-500 hover:to-cyan-500 text-white rounded-xl text-sm font-bold shadow-md shadow-teal-500/20 transition-all cursor-pointer w-full sm:w-auto"
           >
             <UserPlus size={16} />
             <span>Add New User</span>
@@ -184,7 +184,7 @@ export default function UsersPage() {
         </div>
 
         {/* 4 Summary Stat Cards */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-8">
           <div className="bg-white rounded-xl border border-gray-200 p-4 shadow-xs">
             <div className="flex items-center justify-between text-slate-500 text-xs font-semibold uppercase tracking-wider mb-1">
               <span>Total Users</span>
@@ -333,7 +333,7 @@ export default function UsersPage() {
         {/* Add User Modal */}
         {showModal && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-xs p-4">
-            <div className="bg-white rounded-2xl border border-gray-200 shadow-2xl max-w-lg w-full p-6 sm:p-7 relative animate-in fade-in zoom-in-95 duration-150">
+            <div className="bg-white rounded-2xl border border-gray-200 shadow-2xl max-w-lg w-full p-5 sm:p-7 relative animate-in fade-in zoom-in-95 duration-150 max-h-[90vh] overflow-y-auto">
               
               <div className="flex items-center justify-between pb-4 border-b border-gray-100 mb-5">
                 <div className="flex items-center gap-2.5">

@@ -146,29 +146,29 @@ export default function CustomerOnboardingPage() {
         </div>
       </header>
 
-      <main className="max-w-3xl mx-auto px-6 py-10">
-        <div className="text-center mb-10">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-100 border border-blue-200 text-blue-700 text-xs font-semibold mb-3">
-            <Compass size={14} className="text-blue-600" />
+      <main className="max-w-3xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
+        <div className="text-center mb-8 sm:mb-10">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-100/70 border border-teal-200 text-teal-800 text-xs font-semibold mb-3">
+            <Compass size={14} className="text-teal-600" />
             Customer Fast-Track Setup
           </div>
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+          <h1 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
             Configure Your Fund Reporting Portal
           </h1>
-          <p className="text-slate-600 text-sm sm:text-base mt-2 max-w-xl mx-auto">
+          <p className="text-slate-600 text-xs sm:text-base mt-2 max-w-xl mx-auto">
             Fill in the required information marked with a red star (<span className="text-red-500 font-bold">*</span>) to proceed through each onboarding stage.
           </p>
         </div>
 
         {/* Progress Steps */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 mb-8">
           {STEPS.map(step => {
             const isDone = currentStep > step.id;
             const isCurrent = currentStep === step.id;
             return (
               <div
                 key={step.id}
-                className={`p-3.5 rounded-xl border transition-all ${
+                className={`p-2.5 sm:p-3.5 rounded-xl border transition-all ${
                   isCurrent
                     ? 'bg-white border-teal-500 shadow-md ring-2 ring-teal-500/20'
                     : isDone
@@ -177,17 +177,17 @@ export default function CustomerOnboardingPage() {
                 }`}
               >
                 <div className="flex items-center justify-between mb-1.5">
-                  <span className={`text-[11px] font-bold uppercase tracking-wider ${isCurrent ? 'text-teal-700' : isDone ? 'text-slate-700' : 'text-slate-400'}`}>
+                  <span className={`text-[10px] sm:text-[11px] font-bold uppercase tracking-wider ${isCurrent ? 'text-teal-700' : isDone ? 'text-slate-700' : 'text-slate-400'}`}>
                     Step {step.id}
                   </span>
                   {isDone ? (
-                    <CheckCircle2 size={16} className="text-teal-600" />
+                    <CheckCircle2 size={15} className="text-teal-600" />
                   ) : (
                     <span className={`h-2 w-2 rounded-full ${isCurrent ? 'bg-teal-600 animate-pulse' : 'bg-slate-300'}`} />
                   )}
                 </div>
-                <div className="text-sm font-bold text-slate-900">{step.title}</div>
-                <div className="text-[11px] text-slate-500 truncate">{step.desc}</div>
+                <div className="text-xs sm:text-sm font-bold text-slate-900 truncate">{step.title}</div>
+                <div className="text-[10px] sm:text-[11px] text-slate-500 truncate">{step.desc}</div>
               </div>
             );
           })}
@@ -205,7 +205,7 @@ export default function CustomerOnboardingPage() {
         )}
 
         {/* Step Content Card */}
-        <div className="bg-white rounded-2xl border border-slate-200 shadow-xl p-6 sm:p-10 mb-8">
+        <div className="bg-white rounded-2xl border border-slate-200 shadow-xl p-5 sm:p-10 mb-8">
           
           {/* STEP 1 */}
           {currentStep === 1 && (
@@ -337,7 +337,7 @@ export default function CustomerOnboardingPage() {
                   </label>
                   <input
                     type="text"
-                    placeholder="e.g. $750M USD"
+                    placeholder="e.g. ₹5,000 Cr INR"
                     className={`w-full rounded-xl bg-slate-50 border px-3.5 py-2.5 text-sm text-slate-900 focus:outline-none focus:bg-white transition-all ${
                       errors.targetSize
                         ? 'border-red-500 ring-2 ring-red-100 bg-red-50/20'
@@ -359,10 +359,11 @@ export default function CustomerOnboardingPage() {
                     Reporting Base Currency <span className="text-red-500 font-bold">*</span>
                   </label>
                   <select
-                    className="w-full rounded-xl bg-slate-50 border border-slate-200 px-3.5 py-2.5 text-sm text-slate-900 focus:outline-none focus:bg-white focus:border-blue-600 focus:ring-4 focus:ring-blue-100 transition-all"
+                    className="w-full rounded-xl bg-slate-50 border border-slate-200 px-3.5 py-2.5 text-sm text-slate-900 focus:outline-none focus:bg-white focus:border-teal-500 focus:ring-4 focus:ring-teal-100 transition-all"
                     value={formData.reportingCurrency}
                     onChange={e => handleInputChange('reportingCurrency', e.target.value)}
                   >
+                    <option value="INR">INR (₹) — Indian Rupee</option>
                     <option value="USD">USD ($) — US Dollar</option>
                     <option value="EUR">EUR (€) — Euro</option>
                     <option value="GBP">GBP (£) — British Pound</option>
@@ -413,7 +414,7 @@ export default function CustomerOnboardingPage() {
                 <div className="mt-4 flex items-center justify-center gap-3">
                   <Link
                     href="/documents"
-                    className="inline-flex items-center gap-2 bg-blue-600 text-white text-xs font-semibold px-4 py-2 rounded-xl shadow-sm hover:bg-blue-700 transition"
+                    className="inline-flex items-center gap-2 bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-500 hover:to-cyan-500 text-white text-xs font-semibold px-4 py-2.5 rounded-xl shadow-sm transition"
                   >
                     Open Document Uploader
                     <ArrowRight size={14} />
@@ -470,11 +471,11 @@ export default function CustomerOnboardingPage() {
         </div>
 
         {/* Navigation Buttons */}
-        <div className="flex justify-between items-center pt-2">
+        <div className="flex flex-col-reverse sm:flex-row justify-between items-center gap-3 pt-2">
           <button
             onClick={handleBack}
             disabled={currentStep === 1}
-            className="px-4 py-2.5 bg-white border border-slate-200 text-slate-700 text-sm font-semibold rounded-xl hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed transition"
+            className="w-full sm:w-auto px-4 py-2.5 bg-white border border-slate-200 text-slate-700 text-sm font-semibold rounded-xl hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed transition text-center"
           >
             <ArrowLeft size={16} className="inline-block mr-1.5" /> Back
           </button>
@@ -482,7 +483,7 @@ export default function CustomerOnboardingPage() {
           <button
             onClick={handleNext}
             disabled={completing}
-            className="px-6 py-2.5 bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-500 hover:to-cyan-500 text-white text-sm font-bold rounded-xl shadow-md shadow-teal-500/20 flex items-center gap-2 transition"
+            className="w-full sm:w-auto justify-center px-6 py-2.5 bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-500 hover:to-cyan-500 text-white text-sm font-bold rounded-xl shadow-md shadow-teal-500/20 flex items-center gap-2 transition"
           >
             {completing ? (
               'Launching Workspace...'

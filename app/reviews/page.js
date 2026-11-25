@@ -109,7 +109,7 @@ export default function ReviewsPage() {
     <div className="flex min-h-screen bg-gray-50">
       <Sidebar />
       <main className="flex-1 min-w-0 lg:ml-[260px] px-4 pt-20 pb-8 sm:px-6 lg:p-8">
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
           <div>
             <h1 className="text-2xl font-bold text-gray-900">Verification & Human-in-the-Loop Signoff</h1>
             <p className="text-sm text-gray-500">
@@ -119,12 +119,12 @@ export default function ReviewsPage() {
         </div>
 
         {/* Tabs */}
-        <div className="flex border-b border-gray-200 mb-6 space-x-8">
+        <div className="flex border-b border-gray-200 mb-6 gap-4 sm:gap-8 overflow-x-auto no-scrollbar whitespace-nowrap">
           <button
             onClick={() => setActiveTab('kpis')}
-            className={`pb-3 text-sm font-semibold transition border-b-2 flex items-center gap-2 ${
+            className={`pb-3 text-sm font-semibold transition border-b-2 flex items-center gap-2 shrink-0 ${
               activeTab === 'kpis'
-                ? 'border-blue-600 text-blue-600'
+                ? 'border-teal-600 text-teal-600'
                 : 'border-transparent text-gray-500 hover:text-gray-700'
             }`}
           >
@@ -132,9 +132,9 @@ export default function ReviewsPage() {
           </button>
           <button
             onClick={() => setActiveTab('analyses')}
-            className={`pb-3 text-sm font-semibold transition border-b-2 flex items-center gap-2 ${
+            className={`pb-3 text-sm font-semibold transition border-b-2 flex items-center gap-2 shrink-0 ${
               activeTab === 'analyses'
-                ? 'border-blue-600 text-blue-600'
+                ? 'border-teal-600 text-teal-600'
                 : 'border-transparent text-gray-500 hover:text-gray-700'
             }`}
           >
@@ -309,18 +309,18 @@ export default function ReviewsPage() {
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-3 shrink-0">
+                  <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 shrink-0 w-full sm:w-auto">
                     <button
                       onClick={() => handleRejectAnalysis(item._id)}
                       disabled={actionLoading}
-                      className="px-3 py-1.5 border border-red-200 text-red-600 hover:bg-red-50 rounded-lg text-xs font-semibold transition"
+                      className="flex-1 sm:flex-none text-center px-4 py-2 sm:py-1.5 border border-red-200 text-red-600 hover:bg-red-50 rounded-xl text-xs font-semibold transition"
                     >
                       Reject
                     </button>
                     <button
                       onClick={() => handleApproveAnalysis(item._id)}
                       disabled={actionLoading}
-                      className="px-4 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-semibold transition shadow-sm"
+                      className="flex-1 sm:flex-none text-center px-4 py-2 sm:py-1.5 bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-500 hover:to-cyan-500 text-white rounded-xl text-xs font-semibold transition shadow-sm"
                     >
                       Approve for LP Report
                     </button>

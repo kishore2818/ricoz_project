@@ -25,7 +25,7 @@ export default function SettingsPage() {
               <Shield className="w-4 h-4 text-blue-600" />
               Current Authenticated Session
             </h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4 bg-gray-50 rounded-lg text-xs">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 p-4 bg-gray-50 rounded-xl text-xs">
               <div>
                 <span className="text-gray-400">User Name</span>
                 <p className="text-sm font-semibold text-gray-800">{user?.name || 'User'}</p>

@@ -9,6 +9,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
+import Logo from '@/components/Logo';
 import {
   LogIn,
   ShieldCheck,
@@ -95,20 +96,17 @@ export default function LoginPage() {
       <div className="w-full max-w-[480px] relative z-10">
         
         {/* Top Institutional Brand Header */}
-        <div className="text-center mb-6">
-          <div className="inline-flex items-center justify-center h-12 w-12 rounded-2xl bg-gradient-to-br from-teal-500 via-cyan-600 to-indigo-600 text-white font-black text-xl shadow-lg shadow-teal-500/25 mb-3">
-            AP
+        <div className="flex flex-col items-center justify-center text-center mb-6">
+          <div className="mb-3">
+            <Logo size="md" variant="dark" />
           </div>
-          <h1 className="text-xl font-bold tracking-tight text-slate-900">
-            APEX HORIZON CAPITAL
-          </h1>
           <p className="text-xs text-teal-600 font-semibold tracking-wide uppercase mt-0.5">
             LP Reporting & Intelligence Portal
           </p>
         </div>
 
         {/* Clean White Card */}
-        <div className="bg-white rounded-2xl border border-slate-200/90 shadow-xl shadow-slate-200/60 p-7 sm:p-9">
+        <div className="bg-white rounded-2xl border border-slate-200/90 shadow-xl shadow-slate-200/60 p-5 sm:p-9">
           
           {/* Card Title */}
           <div className="mb-6">
@@ -127,7 +125,7 @@ export default function LoginPage() {
               <span className="text-[11px] text-teal-600 font-semibold">1-Click Auto-Fill</span>
             </div>
 
-            <div className="grid grid-cols-3 gap-2.5">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-2.5">
               {DEMO_ACCOUNTS.map((acc) => {
                 const isSelected = selectedDemo === acc.role;
                 return (
