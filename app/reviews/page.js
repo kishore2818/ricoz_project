@@ -111,8 +111,11 @@ export default function ReviewsPage() {
       <main className="flex-1 min-w-0 lg:ml-[260px] px-4 pt-20 pb-8 sm:px-6 lg:p-8">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">Verification & Human-in-the-Loop Signoff</h1>
-            <p className="text-sm text-gray-500">
+            <h1 className="text-xl sm:text-2xl font-bold text-gray-900 leading-snug">
+              <span className="block sm:inline">Verification &amp;</span>{' '}
+              <span className="block sm:inline">Human-in-the-Loop Signoff</span>
+            </h1>
+            <p className="text-xs sm:text-sm text-gray-500 mt-1">
               Audit trail verification • Only approved figures are published to Limited Partner packets
             </p>
           </div>
@@ -164,8 +167,111 @@ export default function ReviewsPage() {
                 </p>
               </div>
             ) : (
-              <div className="overflow-x-auto">
-                <table className="w-full text-left text-sm">
+              <>
+                {/* Mobile / Tablet Responsive Cards: 2 or 3 in each row */}
+                <div className="md:hidden grid grid-cols-1 sm:grid-cols-2 gap-3 p-3">
+                  {pendingData.pendingKPIs.map((kpi) => {
+                    const isEditing = editingKpiId === kpi._id;
+                    return (
+                      <div
+                        key={kpi._id}
+                        className="bg-white rounded-xl border border-gray-200 p-3.5 shadow-xs flex flex-col justify-between"
+                      >
+                        <div>
+                          <div className="flex items-center justify-between gap-2 mb-1.5">
+                            <span className="text-xs font-bold text-gray-900 truncate">
+                              {kpi.companyId?.name}
+                            </span>
+                            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-teal-50 text-teal-700 border border-teal-200 shrink-0">
+                              {Math.round((kpi.confidence || 0) * 100)}% Conf
+                            </span>
+                          </div>
+                          <p className="text-xs text-gray-600 font-medium mb-1">
+                            {kpi.metricName}
+                          </p>
+                          <div className="font-mono font-bold text-sm text-gray-900 mb-2">
+                            {isEditing ? (
+                              <div className="space-y-1.5 mt-1">
+                                <input
+                                  type="text"
+                                  value={editValue}
+                                  onChange={(e) => setEditValue(e.target.value)}
+                                  className="px-2 py-1 border border-teal-500 rounded text-xs w-full font-mono"
+                                  placeholder="New value"
+                                />
+                                <input
+                                  type="text"
+                                  value={editReason}
+                                  onChange={(e) => setEditReason(e.target.value)}
+                                  className="px-2 py-1 border border-gray-300 rounded text-[11px] w-full block"
+                                  placeholder="Audit reason (required)"
+                                />
+                              </div>
+                            ) : (
+                              <span>
+                                {kpi.extractedValue !== null
+                                  ? typeof kpi.extractedValue === 'number'
+                                    ? (kpi.unitOrCurrency === 'USD' || kpi.unitOrCurrency === 'INR' ? '₹' : '') +
+                                      Number(kpi.extractedValue).toLocaleString('en-IN')
+                                    : String(kpi.extractedValue)
+                                  : 'null'}{' '}
+                                <span className="text-[11px] text-gray-500 font-normal">
+                                  {kpi.unitOrCurrency}
+                                </span>
+                              </span>
+                            )}
+                          </div>
+                          <p className="text-[11px] text-gray-400 line-clamp-1 mb-3">
+                            p. {kpi.sourcePageNumber || 1} • {kpi.sourceSnippet || 'Source filing'}
+                          </p>
+                        </div>
+
+                        <div className="pt-2 border-t border-gray-100 flex items-center justify-end gap-2">
+                          {isEditing ? (
+                            <>
+                              <button
+                                onClick={() => handleSaveKPIEdit(kpi._id)}
+                                disabled={actionLoading}
+                                className="px-3 py-1 bg-teal-600 hover:bg-teal-700 text-white rounded-lg text-xs font-semibold"
+                              >
+                                Save
+                              </button>
+                              <button
+                                onClick={() => setEditingKpiId(null)}
+                                className="px-3 py-1 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg text-xs"
+                              >
+                                Cancel
+                              </button>
+                            </>
+                          ) : (
+                            <>
+                              <button
+                                onClick={() => handleVerifyKPI(kpi)}
+                                disabled={actionLoading}
+                                className="inline-flex items-center gap-1 px-3 py-1 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 rounded-lg text-xs font-semibold"
+                              >
+                                <Check className="w-3 h-3" /> Verify
+                              </button>
+                              <button
+                                onClick={() => {
+                                  setEditingKpiId(kpi._id);
+                                  setEditValue(kpi.extractedValue || '');
+                                }}
+                                className="inline-flex items-center gap-1 px-3 py-1 bg-amber-50 text-amber-700 hover:bg-amber-100 rounded-lg text-xs font-semibold"
+                              >
+                                <Edit3 className="w-3 h-3" /> Correct
+                              </button>
+                            </>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {/* Desktop Full Table */}
+                <div className="hidden md:block overflow-x-auto">
+                  <table className="w-full text-left text-sm">
                   <thead className="bg-gray-50/80 border-b border-gray-200 text-gray-500 text-xs uppercase font-semibold">
                     <tr>
                       <th className="py-3 px-6">Company</th>
@@ -269,7 +375,8 @@ export default function ReviewsPage() {
                   </tbody>
                 </table>
               </div>
-            )}
+            </>
+          )}
           </div>
         ) : (
           /* Analyses Approval Tab */
@@ -285,48 +392,53 @@ export default function ReviewsPage() {
                 </p>
               </div>
             ) : (
-              pendingData.pendingAnalyses.map((item) => (
-                <div
-                  key={item._id}
-                  className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-6"
-                >
-                  <div className="space-y-2 max-w-2xl">
-                    <div className="flex items-center gap-3">
-                      <h3 className="text-base font-bold text-gray-900">
-                        {item.companyId?.name} — {item.reportingQuarter} {item.reportingYear}
-                      </h3>
-                      <StatusBadge status={item.status} size="sm" />
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {pendingData.pendingAnalyses.map((item) => (
+                  <div
+                    key={item._id}
+                    className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm flex flex-col justify-between gap-4 hover:border-teal-500/40 transition-all"
+                  >
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between gap-2">
+                        <h3 className="text-sm sm:text-base font-bold text-gray-900 truncate">
+                          {item.companyId?.name}
+                        </h3>
+                        <StatusBadge status={item.status} size="sm" />
+                      </div>
+                      <p className="text-xs font-semibold text-teal-700">
+                        {item.reportingQuarter} {item.reportingYear} Disclosure
+                      </p>
+                      <p className="text-xs text-gray-600 leading-relaxed line-clamp-3">
+                        {item.executiveSummary}
+                      </p>
+                      <div className="flex flex-wrap gap-1.5 pt-1">
+                        {item.financialHighlights?.slice(0, 3).map((h, i) => (
+                          <span key={i} className="text-[10px] font-mono bg-teal-50 text-teal-800 px-2 py-0.5 rounded border border-teal-200/60">
+                            {h}
+                          </span>
+                        ))}
+                      </div>
                     </div>
-                    <p className="text-xs text-gray-600 leading-relaxed">
-                      {item.executiveSummary}
-                    </p>
-                    <div className="flex flex-wrap gap-2 pt-1">
-                      {item.financialHighlights?.slice(0, 3).map((h, i) => (
-                        <span key={i} className="text-[11px] font-mono bg-blue-50 text-blue-800 px-2 py-0.5 rounded">
-                          {h}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
 
-                  <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 shrink-0 w-full sm:w-auto">
-                    <button
-                      onClick={() => handleRejectAnalysis(item._id)}
-                      disabled={actionLoading}
-                      className="flex-1 sm:flex-none text-center px-4 py-2 sm:py-1.5 border border-red-200 text-red-600 hover:bg-red-50 rounded-xl text-xs font-semibold transition"
-                    >
-                      Reject
-                    </button>
-                    <button
-                      onClick={() => handleApproveAnalysis(item._id)}
-                      disabled={actionLoading}
-                      className="flex-1 sm:flex-none text-center px-4 py-2 sm:py-1.5 bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-500 hover:to-cyan-500 text-white rounded-xl text-xs font-semibold transition shadow-sm"
-                    >
-                      Approve for LP Report
-                    </button>
+                    <div className="flex items-center gap-2 pt-3 border-t border-gray-100">
+                      <button
+                        onClick={() => handleRejectAnalysis(item._id)}
+                        disabled={actionLoading}
+                        className="flex-1 text-center px-3 py-1.5 border border-red-200 text-red-600 hover:bg-red-50 rounded-lg text-xs font-semibold transition"
+                      >
+                        Reject
+                      </button>
+                      <button
+                        onClick={() => handleApproveAnalysis(item._id)}
+                        disabled={actionLoading}
+                        className="flex-1 text-center px-3 py-1.5 bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-500 hover:to-cyan-500 text-white rounded-lg text-xs font-semibold transition shadow-sm"
+                      >
+                        Approve
+                      </button>
+                    </div>
                   </div>
-                </div>
-              ))
+                ))}
+              </div>
             )}
           </div>
         )}

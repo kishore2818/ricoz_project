@@ -104,7 +104,7 @@ export default function CompanyDetailPage() {
                 {data.description || 'No description available for this portfolio asset.'}
               </p>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 p-4 bg-gray-50 rounded-xl text-xs">
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4 p-4 bg-gray-50 rounded-xl text-xs">
                 <div>
                   <span className="text-gray-400">Initial Investment</span>
                   <p className="text-sm font-bold text-gray-900">
@@ -159,57 +159,102 @@ export default function CompanyDetailPage() {
             )}
 
             {/* Extracted KPIs Table */}
-            <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
+            <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-5 sm:p-6">
               <h2 className="text-base font-bold text-gray-900 mb-4">
-                Latest Extracted Financial & Operational KPIs
+                Latest Extracted Financial &amp; Operational KPIs
               </h2>
               {(!data.kpis || data.kpis.length === 0) ? (
                 <p className="text-sm text-gray-500 py-6 text-center">
                   No quarterly KPIs extracted yet. Upload a quarterly report to begin analysis.
                 </p>
               ) : (
-                <div className="overflow-x-auto">
-                  <table className="w-full text-left text-sm">
-                    <thead>
-                      <tr className="border-b border-gray-200 text-gray-400 text-xs uppercase">
-                        <th className="pb-3">Metric Name</th>
-                        <th className="pb-3">Category</th>
-                        <th className="pb-3">Extracted Value</th>
-                        <th className="pb-3">Unit</th>
-                        <th className="pb-3">Period</th>
-                        <th className="pb-3">Audit Source</th>
-                        <th className="pb-3 text-right">Verification</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-gray-100">
-                      {data.kpis.map((kpi) => (
-                        <tr key={kpi._id} className="hover:bg-gray-50 transition">
-                          <td className="py-3 font-semibold text-gray-900">
-                            {kpi.metricName}
-                          </td>
-                          <td className="py-3 text-xs text-gray-500">{kpi.category}</td>
-                          <td className="py-3 font-mono font-bold text-gray-900">
-                            {kpi.extractedValue !== null
-                              ? typeof kpi.extractedValue === 'number'
-                                ? Number(kpi.extractedValue).toLocaleString()
-                                : String(kpi.extractedValue)
-                              : '— (Not Reported)'}
-                          </td>
-                          <td className="py-3 text-xs text-gray-600">{kpi.unitOrCurrency}</td>
-                          <td className="py-3 text-xs text-gray-700">
-                            {kpi.reportingQuarter} {kpi.reportingYear}
-                          </td>
-                          <td className="py-3 text-xs text-gray-500 max-w-xs truncate">
-                            p. {kpi.sourcePageNumber || 1} ({kpi.sourceSnippet || 'Document'})
-                          </td>
-                          <td className="py-3 text-right">
+                <>
+                  {/* Mobile / Tablet Responsive Cards: 2 or 3 in each row */}
+                  <div className="md:hidden grid grid-cols-1 sm:grid-cols-2 gap-3 mb-2">
+                    {data.kpis.map((kpi) => (
+                      <div
+                        key={kpi._id}
+                        className="bg-slate-50/70 rounded-xl border border-gray-200 p-3.5 shadow-xs flex flex-col justify-between"
+                      >
+                        <div>
+                          <div className="flex items-start justify-between gap-2 mb-1.5">
+                            <div>
+                              <h3 className="text-xs font-bold text-gray-900">
+                                {kpi.metricName}
+                              </h3>
+                              <p className="text-[10px] text-gray-500">
+                                {kpi.category}
+                              </p>
+                            </div>
                             <StatusBadge status={kpi.verificationStatus} size="sm" />
-                          </td>
+                          </div>
+
+                          <div className="my-2.5 p-2 bg-white rounded-lg border border-gray-100">
+                            <span className="text-[10px] text-gray-400 block uppercase">Extracted Value</span>
+                            <span className="font-mono font-bold text-base text-gray-900">
+                              {kpi.extractedValue !== null
+                                ? (kpi.unitOrCurrency === 'USD' || kpi.unitOrCurrency === 'INR' ? '₹' : '') +
+                                  (typeof kpi.extractedValue === 'number'
+                                    ? Number(kpi.extractedValue).toLocaleString('en-IN')
+                                    : String(kpi.extractedValue)) +
+                                  (kpi.unitOrCurrency !== 'USD' && kpi.unitOrCurrency !== 'INR' ? ` ${kpi.unitOrCurrency}` : '')
+                                : '— (Not Reported)'}
+                            </span>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center justify-between pt-2 border-t border-gray-200/60 text-[11px] text-gray-500">
+                          <span>{kpi.reportingQuarter} {kpi.reportingYear}</span>
+                          <span>p. {kpi.sourcePageNumber || 1}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Desktop Full Table */}
+                  <div className="hidden md:block overflow-x-auto">
+                    <table className="w-full text-left text-sm">
+                      <thead>
+                        <tr className="border-b border-gray-200 text-gray-400 text-xs uppercase">
+                          <th className="pb-3">Metric Name</th>
+                          <th className="pb-3">Category</th>
+                          <th className="pb-3">Extracted Value</th>
+                          <th className="pb-3">Unit</th>
+                          <th className="pb-3">Period</th>
+                          <th className="pb-3">Audit Source</th>
+                          <th className="pb-3 text-right">Verification</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
+                      </thead>
+                      <tbody className="divide-y divide-gray-100">
+                        {data.kpis.map((kpi) => (
+                          <tr key={kpi._id} className="hover:bg-gray-50 transition">
+                            <td className="py-3 font-semibold text-gray-900">
+                              {kpi.metricName}
+                            </td>
+                            <td className="py-3 text-xs text-gray-500">{kpi.category}</td>
+                            <td className="py-3 font-mono font-bold text-gray-900">
+                              {kpi.extractedValue !== null
+                                ? typeof kpi.extractedValue === 'number'
+                                  ? Number(kpi.extractedValue).toLocaleString()
+                                  : String(kpi.extractedValue)
+                                : '— (Not Reported)'}
+                            </td>
+                            <td className="py-3 text-xs text-gray-600">{kpi.unitOrCurrency}</td>
+                            <td className="py-3 text-xs text-gray-700">
+                              {kpi.reportingQuarter} {kpi.reportingYear}
+                            </td>
+                            <td className="py-3 text-xs text-gray-500 max-w-xs truncate">
+                              p. {kpi.sourcePageNumber || 1} ({kpi.sourceSnippet || 'Document'})
+                            </td>
+                            <td className="py-3 text-right">
+                              <StatusBadge status={kpi.verificationStatus} size="sm" />
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </>
               )}
             </div>
           </div>

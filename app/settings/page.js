@@ -12,9 +12,13 @@ export default function SettingsPage() {
       <Sidebar />
       <main className="flex-1 min-w-0 lg:ml-[260px] px-4 pt-20 pb-8 sm:px-6 lg:p-8">
         <div className="mb-8">
-          <h1 className="text-2xl font-bold text-gray-900">Application Settings</h1>
-          <p className="text-sm text-gray-500">
-            Account profile, reporting standards, and extraction compliance policies
+          <h1 className="text-xl sm:text-2xl font-bold text-gray-900 leading-snug">
+            <span className="block sm:inline">Application Settings</span>{' '}
+            <span className="block sm:inline">&amp; Compliance</span>
+          </h1>
+          <p className="text-xs sm:text-sm text-gray-500 mt-1">
+            <span className="block sm:inline">Account profile, reporting standards,</span>{' '}
+            <span className="block sm:inline">and extraction compliance policies</span>
           </p>
         </div>
 
@@ -25,7 +29,7 @@ export default function SettingsPage() {
               <Shield className="w-4 h-4 text-blue-600" />
               Current Authenticated Session
             </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 p-4 bg-gray-50 rounded-xl text-xs">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4 p-4 bg-gray-50 rounded-xl text-xs">
               <div>
                 <span className="text-gray-400">User Name</span>
                 <p className="text-sm font-semibold text-gray-800">{user?.name || 'User'}</p>

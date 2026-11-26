@@ -116,7 +116,7 @@ export default function DashboardPage() {
         ) : (
           <div className="space-y-8">
             {/* Top Metrics Row */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
               <MetricsCard
                 title="Total Funds"
                 value={data.totalFunds || 0}
@@ -146,7 +146,7 @@ export default function DashboardPage() {
             </div>
 
             {/* Document Pipeline Status Row */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
               <MetricsCard
                 title="Total Documents"
                 value={data.totalDocuments || 0}
@@ -193,46 +193,82 @@ export default function DashboardPage() {
                     No documents uploaded yet.
                   </p>
                 ) : (
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-left text-sm">
-                      <thead>
-                        <tr className="border-b border-gray-100 text-gray-400 text-xs uppercase">
-                          <th className="pb-3">Document / Company</th>
-                          <th className="pb-3">Period</th>
-                          <th className="pb-3">Status</th>
-                          <th className="pb-3 text-right">Action</th>
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-gray-100">
-                        {data.recentDocuments.map((doc) => (
-                          <tr key={doc._id} className="hover:bg-gray-50 transition">
-                            <td className="py-3">
-                              <p className="font-medium text-gray-900 truncate max-w-[200px]">
-                                {doc.originalName}
-                              </p>
-                              <p className="text-xs text-gray-500">
-                                {doc.companyId?.name || 'Unknown'}
-                              </p>
-                            </td>
-                            <td className="py-3 text-xs font-medium text-gray-700">
-                              {doc.reportingQuarter} {doc.reportingYear}
-                            </td>
-                            <td className="py-3">
+                  <>
+                    {/* Mobile / Tablet Responsive Cards: 2 or 3 in each row */}
+                    <div className="md:hidden grid grid-cols-1 sm:grid-cols-2 gap-2.5 mb-2">
+                      {data.recentDocuments.map((doc) => (
+                        <div
+                          key={doc._id}
+                          className="bg-slate-50/70 rounded-xl border border-gray-100 p-3 shadow-xs flex flex-col justify-between"
+                        >
+                          <div>
+                            <div className="flex items-start justify-between gap-1.5 mb-1.5">
+                              <span className="text-xs font-semibold text-gray-900 truncate">
+                                {doc.companyId?.name || 'Asset'}
+                              </span>
                               <StatusBadge status={doc.status} size="sm" />
-                            </td>
-                            <td className="py-3 text-right">
-                              <Link
-                                href={`/analysis?documentId=${doc._id}`}
-                                className="text-xs text-blue-600 hover:underline font-medium"
-                              >
-                                Review
-                              </Link>
-                            </td>
+                            </div>
+                            <p className="text-[11px] font-mono text-gray-600 truncate mb-1">
+                              {doc.originalName}
+                            </p>
+                          </div>
+                          <div className="flex items-center justify-between pt-2 border-t border-gray-200/50 text-[11px]">
+                            <span className="text-gray-500">
+                              {doc.reportingQuarter} {doc.reportingYear}
+                            </span>
+                            <Link
+                              href={`/analysis?documentId=${doc._id}`}
+                              className="text-teal-600 hover:underline font-semibold"
+                            >
+                              Review →
+                            </Link>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Desktop Full Table */}
+                    <div className="hidden md:block overflow-x-auto">
+                      <table className="w-full text-left text-sm">
+                        <thead>
+                          <tr className="border-b border-gray-100 text-gray-400 text-xs uppercase">
+                            <th className="pb-3">Document / Company</th>
+                            <th className="pb-3">Period</th>
+                            <th className="pb-3">Status</th>
+                            <th className="pb-3 text-right">Action</th>
                           </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
+                        </thead>
+                        <tbody className="divide-y divide-gray-100">
+                          {data.recentDocuments.map((doc) => (
+                            <tr key={doc._id} className="hover:bg-gray-50 transition">
+                              <td className="py-3">
+                                <p className="font-medium text-gray-900 truncate max-w-[200px]">
+                                  {doc.originalName}
+                                </p>
+                                <p className="text-xs text-gray-500">
+                                  {doc.companyId?.name || 'Unknown'}
+                                </p>
+                              </td>
+                              <td className="py-3 text-xs font-medium text-gray-700">
+                                {doc.reportingQuarter} {doc.reportingYear}
+                              </td>
+                              <td className="py-3">
+                                <StatusBadge status={doc.status} size="sm" />
+                              </td>
+                              <td className="py-3 text-right">
+                                <Link
+                                  href={`/analysis?documentId=${doc._id}`}
+                                  className="text-xs text-blue-600 hover:underline font-medium"
+                                >
+                                  Review
+                                </Link>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </>
                 )}
               </div>
 

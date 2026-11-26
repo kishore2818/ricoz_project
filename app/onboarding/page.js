@@ -178,8 +178,9 @@ export default function OnboardingPage() {
               <Compass size={14} className="text-teal-600" />
               <span>Institutional Fast-Track Onboarding</span>
             </div>
-            <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-              Configure Your Fund Reporting Portal
+            <h1 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-snug">
+              <span className="block sm:inline">Configure Your Fund</span>{' '}
+              <span className="block sm:inline">Reporting Portal</span>
             </h1>
             <p className="text-slate-600 text-sm sm:text-base mt-2 max-w-xl mx-auto">
               Set up your investment vehicle, configure audit-traceable KPIs in Indian Rupees (₹), and experience automated LP report generation in 4 simple steps.
@@ -226,9 +227,12 @@ export default function OnboardingPage() {
             {currentStep === 1 && (
               <div className="space-y-6">
                 <div className="border-b border-slate-100 pb-4">
-                  <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2.5">
-                    <Landmark className="text-teal-600" size={22} />
-                    Step 1: Primary Fund Vehicle & Mandate
+                  <h2 className="text-lg sm:text-xl font-bold text-slate-900 flex items-center gap-2.5 leading-snug">
+                    <Landmark className="text-teal-600 shrink-0" size={22} />
+                    <span>
+                      <span className="block sm:inline">Step 1: Primary Fund</span>{' '}
+                      <span className="block sm:inline">Vehicle &amp; Mandate</span>
+                    </span>
                   </h2>
                   <p className="text-xs text-slate-500 mt-1">
                     Specify the flagship private equity fund that will anchor your portfolio company reports.
@@ -338,9 +342,12 @@ export default function OnboardingPage() {
             {currentStep === 2 && (
               <div className="space-y-6">
                 <div className="border-b border-slate-100 pb-4">
-                  <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2.5">
-                    <BarChart3 className="text-teal-600" size={22} />
-                    Step 2: Core KPI Metrics & Valuation Triggers
+                  <h2 className="text-lg sm:text-xl font-bold text-slate-900 flex items-center gap-2.5 leading-snug">
+                    <BarChart3 className="text-teal-600 shrink-0" size={22} />
+                    <span>
+                      <span className="block sm:inline">Step 2: Core KPI Metrics</span>{' '}
+                      <span className="block sm:inline">&amp; Valuation Triggers</span>
+                    </span>
                   </h2>
                   <p className="text-xs text-slate-500 mt-1">
                     Select the metrics your LP Advisory Committee (LPAC) expects in quarterly disclosure packs.
@@ -356,7 +363,7 @@ export default function OnboardingPage() {
                       <AlertCircle size={12} /> {errors.kpis}
                     </p>
                   )}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                     {availableKPIs.map(kpi => {
                       const isSelected = formData.selectedKPIs.includes(kpi.id);
                       return (
@@ -396,9 +403,12 @@ export default function OnboardingPage() {
             {currentStep === 3 && (
               <div className="space-y-6">
                 <div className="border-b border-slate-100 pb-4">
-                  <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2.5">
-                    <UploadCloud className="text-teal-600" size={22} />
-                    Step 3: Ingest First Portfolio Company Filing
+                  <h2 className="text-lg sm:text-xl font-bold text-slate-900 flex items-center gap-2.5 leading-snug">
+                    <UploadCloud className="text-teal-600 shrink-0" size={22} />
+                    <span>
+                      <span className="block sm:inline">Step 3: Ingest First Portfolio</span>{' '}
+                      <span className="block sm:inline">Company Filing</span>
+                    </span>
                   </h2>
                   <p className="text-xs text-slate-500 mt-1">
                     Upload raw quarterly financial statements (PDF, Excel, or CSV) for automated OCR and KPI extraction.
@@ -454,9 +464,12 @@ export default function OnboardingPage() {
             {currentStep === 4 && (
               <div className="space-y-6">
                 <div className="border-b border-slate-100 pb-4">
-                  <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2.5">
-                    <Sparkles className="text-teal-600" size={22} />
-                    Step 4: Audit Verification & Launch Portal
+                  <h2 className="text-lg sm:text-xl font-bold text-slate-900 flex items-center gap-2.5 leading-snug">
+                    <Sparkles className="text-teal-600 shrink-0" size={22} />
+                    <span>
+                      <span className="block sm:inline">Step 4: Audit Verification</span>{' '}
+                      <span className="block sm:inline">&amp; Launch Portal</span>
+                    </span>
                   </h2>
                   <p className="text-xs text-slate-500 mt-1">
                     Review your configured setup. You can adjust settings or add additional funds at any time.

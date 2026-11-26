@@ -106,9 +106,13 @@ export default function ReportsPage() {
       <main className="flex-1 min-w-0 lg:ml-[260px] px-4 pt-20 pb-8 sm:px-6 lg:p-8">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">Institutional LP Investor Packets</h1>
-            <p className="text-sm text-gray-500">
-              Generate and download formal ILPA-compliant quarterly reporting packets for Limited Partners
+            <h1 className="text-xl sm:text-2xl font-bold text-gray-900 leading-snug">
+              <span className="block sm:inline">Institutional LP</span>{' '}
+              <span className="block sm:inline">Investor Packets</span>
+            </h1>
+            <p className="text-xs sm:text-sm text-gray-500 mt-1">
+              <span className="block sm:inline">Generate and download formal ILPA-compliant</span>{' '}
+              <span className="block sm:inline">quarterly reporting packets for Limited Partners</span>
             </p>
           </div>
           <button
@@ -136,50 +140,89 @@ export default function ReportsPage() {
             onAction={() => setShowModal(true)}
           />
         ) : (
-          <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
-            <div className="overflow-x-auto">
-              <table className="w-full text-left text-sm">
-                <thead className="bg-gray-50/80 border-b border-gray-200 text-gray-500 text-xs uppercase font-semibold">
-                  <tr>
-                    <th className="py-3 px-6">Report Title</th>
-                    <th className="py-3 px-6">Fund Vehicle</th>
-                    <th className="py-3 px-6">Reporting Period</th>
-                    <th className="py-3 px-6">Generated Date</th>
-                    <th className="py-3 px-6">Report Status</th>
-                    <th className="py-3 px-6 text-right">Download</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-100">
-                  {reports.map((rep) => (
-                    <tr key={rep._id} className="hover:bg-gray-50/80 transition">
-                      <td className="py-4 px-6 font-semibold text-gray-900 flex items-center gap-2.5">
-                        <FileOutput className="w-4 h-4 text-blue-600 shrink-0" />
-                        <span>{rep.title}</span>
-                      </td>
-                      <td className="py-4 px-6 text-xs font-mono font-medium text-gray-700">
+          <div>
+            {/* Mobile / Tablet Cards Grid (2 or 3 in each row) */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:hidden">
+              {reports.map((rep) => (
+                <div
+                  key={`card-${rep._id}`}
+                  className="bg-white rounded-xl border border-gray-200 p-4 shadow-xs flex flex-col justify-between"
+                >
+                  <div>
+                    <div className="flex items-start justify-between gap-2 mb-2">
+                      <span className="text-[10px] font-mono font-bold px-2 py-0.5 bg-gray-100 text-gray-700 rounded border border-gray-200">
                         {rep.fundId?.identifier}
-                      </td>
-                      <td className="py-4 px-6 text-xs font-medium text-gray-800">
-                        {rep.reportingQuarter} {rep.reportingYear}
-                      </td>
-                      <td className="py-4 px-6 text-xs text-gray-500">
-                        {new Date(rep.createdAt).toLocaleDateString()}
-                      </td>
-                      <td className="py-4 px-6">
-                        <StatusBadge status={rep.status} size="sm" />
-                      </td>
-                      <td className="py-4 px-6 text-right">
-                        <button
-                          onClick={() => handleDownload(rep._id, rep.pdfFileName)}
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 text-blue-700 hover:bg-blue-100 rounded-lg text-xs font-bold transition"
-                        >
-                          <Download className="w-3.5 h-3.5" /> PDF Download
-                        </button>
-                      </td>
+                      </span>
+                      <StatusBadge status={rep.status} size="sm" />
+                    </div>
+                    <div className="flex items-center gap-2 mb-1.5">
+                      <FileOutput className="w-4 h-4 text-teal-600 shrink-0" />
+                      <h3 className="text-xs sm:text-sm font-bold text-gray-900 line-clamp-2">
+                        {rep.title}
+                      </h3>
+                    </div>
+                    <div className="flex items-center justify-between text-xs text-gray-500 py-1.5 px-2 bg-gray-50 rounded-lg mb-3">
+                      <span>Period: {rep.reportingQuarter} {rep.reportingYear}</span>
+                      <span>{new Date(rep.createdAt).toLocaleDateString()}</span>
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={() => handleDownload(rep._id, rep.pdfFileName)}
+                    className="w-full inline-flex items-center justify-center gap-1.5 px-3 py-2 bg-teal-50 text-teal-700 hover:bg-teal-100 rounded-lg text-xs font-bold transition"
+                  >
+                    <Download className="w-3.5 h-3.5" /> PDF Download
+                  </button>
+                </div>
+              ))}
+            </div>
+
+            {/* Desktop Table View */}
+            <div className="hidden md:block bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-sm">
+                  <thead className="bg-gray-50/80 border-b border-gray-200 text-gray-500 text-xs uppercase font-semibold">
+                    <tr>
+                      <th className="py-3 px-6">Report Title</th>
+                      <th className="py-3 px-6">Fund Vehicle</th>
+                      <th className="py-3 px-6">Reporting Period</th>
+                      <th className="py-3 px-6">Generated Date</th>
+                      <th className="py-3 px-6">Report Status</th>
+                      <th className="py-3 px-6 text-right">Download</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody className="divide-y divide-gray-100">
+                    {reports.map((rep) => (
+                      <tr key={rep._id} className="hover:bg-gray-50/80 transition">
+                        <td className="py-4 px-6 font-semibold text-gray-900 flex items-center gap-2.5">
+                          <FileOutput className="w-4 h-4 text-teal-600 shrink-0" />
+                          <span>{rep.title}</span>
+                        </td>
+                        <td className="py-4 px-6 text-xs font-mono font-medium text-gray-700">
+                          {rep.fundId?.identifier}
+                        </td>
+                        <td className="py-4 px-6 text-xs font-medium text-gray-800">
+                          {rep.reportingQuarter} {rep.reportingYear}
+                        </td>
+                        <td className="py-4 px-6 text-xs text-gray-500">
+                          {new Date(rep.createdAt).toLocaleDateString()}
+                        </td>
+                        <td className="py-4 px-6">
+                          <StatusBadge status={rep.status} size="sm" />
+                        </td>
+                        <td className="py-4 px-6 text-right">
+                          <button
+                            onClick={() => handleDownload(rep._id, rep.pdfFileName)}
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-teal-50 text-teal-700 hover:bg-teal-100 rounded-lg text-xs font-bold transition"
+                          >
+                            <Download className="w-3.5 h-3.5" /> PDF Download
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         )}

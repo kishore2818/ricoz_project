@@ -91,9 +91,13 @@ export default function FundsPage() {
       <main className="flex-1 min-w-0 lg:ml-[260px] px-4 pt-20 pb-8 sm:px-6 lg:p-8">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">Investment Funds</h1>
-            <p className="text-sm text-gray-500">
-              Manage fund vehicles, capital allocations, and reporting cadences
+            <h1 className="text-xl sm:text-2xl font-bold text-gray-900 leading-snug">
+              <span className="block sm:inline">Investment Funds</span>{' '}
+              <span className="block sm:inline">&amp; Mandates</span>
+            </h1>
+            <p className="text-xs sm:text-sm text-gray-500 mt-1">
+              <span className="block sm:inline">Manage fund vehicles,</span>{' '}
+              <span className="block sm:inline">capital allocations, and reporting cadences</span>
             </p>
           </div>
           {user?.role === 'Admin' && (
@@ -123,7 +127,7 @@ export default function FundsPage() {
             onAction={() => setShowModal(true)}
           />
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {funds.map((f) => (
               <div
                 key={f._id}

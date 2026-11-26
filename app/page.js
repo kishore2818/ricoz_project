@@ -201,29 +201,29 @@ export default function LandingPage() {
             </div>
 
             {/* KPI Cards Row (In Indian Rupees ₹) */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6">
-              <div className="bg-slate-50/80 rounded-xl p-3.5 border border-slate-200/70">
-                <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Total Fund AUM</p>
-                <p className="text-xl sm:text-2xl font-bold font-mono text-slate-900 mt-1">₹6,250 Cr</p>
-                <p className="text-[11px] text-teal-600 font-medium mt-1">Fund IV Vintage 2024</p>
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4 mb-6">
+              <div className="bg-slate-50/80 rounded-xl p-2.5 sm:p-3.5 border border-slate-200/70">
+                <p className="text-[10px] sm:text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Total Fund AUM</p>
+                <p className="text-lg sm:text-2xl font-bold font-mono text-slate-900 mt-1">₹6,250 Cr</p>
+                <p className="text-[10px] sm:text-[11px] text-teal-600 font-medium mt-0.5">Fund IV Vintage 2024</p>
               </div>
 
-              <div className="bg-slate-50/80 rounded-xl p-3.5 border border-slate-200/70">
-                <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Current Valuation</p>
-                <p className="text-xl sm:text-2xl font-bold font-mono text-slate-900 mt-1">₹8,450 Cr</p>
-                <p className="text-[11px] text-emerald-600 font-medium mt-1">+18.4% YoY Expansion</p>
+              <div className="bg-slate-50/80 rounded-xl p-2.5 sm:p-3.5 border border-slate-200/70">
+                <p className="text-[10px] sm:text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Current Valuation</p>
+                <p className="text-lg sm:text-2xl font-bold font-mono text-slate-900 mt-1">₹8,450 Cr</p>
+                <p className="text-[10px] sm:text-[11px] text-emerald-600 font-medium mt-0.5">+18.4% YoY Expansion</p>
               </div>
 
-              <div className="bg-slate-50/80 rounded-xl p-3.5 border border-slate-200/70">
-                <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Net Portfolio MoIC</p>
-                <p className="text-xl sm:text-2xl font-bold font-mono text-slate-900 mt-1">1.65x</p>
-                <p className="text-[11px] text-cyan-600 font-medium mt-1">Target: 2.2x</p>
+              <div className="bg-slate-50/80 rounded-xl p-2.5 sm:p-3.5 border border-slate-200/70">
+                <p className="text-[10px] sm:text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Net Portfolio MoIC</p>
+                <p className="text-lg sm:text-2xl font-bold font-mono text-slate-900 mt-1">1.65x</p>
+                <p className="text-[10px] sm:text-[11px] text-cyan-600 font-medium mt-0.5">Target: 2.2x</p>
               </div>
 
-              <div className="bg-slate-50/80 rounded-xl p-3.5 border border-slate-200/70">
-                <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Dual-Signoff Status</p>
-                <p className="text-xl sm:text-2xl font-bold text-slate-900 mt-1">100%</p>
-                <p className="text-[11px] text-emerald-600 font-medium mt-1">LP Packet Ready</p>
+              <div className="bg-slate-50/80 rounded-xl p-2.5 sm:p-3.5 border border-slate-200/70">
+                <p className="text-[10px] sm:text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Dual-Signoff Status</p>
+                <p className="text-lg sm:text-2xl font-bold text-slate-900 mt-1">100%</p>
+                <p className="text-[10px] sm:text-[11px] text-emerald-600 font-medium mt-0.5">LP Packet Ready</p>
               </div>
             </div>
 

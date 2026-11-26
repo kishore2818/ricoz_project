@@ -162,12 +162,16 @@ export default function UsersPage() {
         {/* Top Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2.5">
-              <Shield className="text-teal-600" size={24} />
-              User & RBAC Administration
+            <h1 className="text-xl sm:text-2xl font-bold text-gray-900 flex items-center gap-2.5 leading-snug">
+              <Shield className="text-teal-600 shrink-0" size={24} />
+              <span>
+                <span className="block sm:inline">User &amp; RBAC</span>{' '}
+                <span className="block sm:inline">Administration</span>
+              </span>
             </h1>
-            <p className="text-sm text-gray-500 mt-0.5">
-              Manage internal investment analysts, audit reviewers, and executive administrator privileges.
+            <p className="text-xs sm:text-sm text-gray-500 mt-1">
+              <span className="block sm:inline">Manage internal investment analysts,</span>{' '}
+              <span className="block sm:inline">audit reviewers, and executive administrator privileges</span>
             </p>
           </div>
           <button
@@ -184,7 +188,7 @@ export default function UsersPage() {
         </div>
 
         {/* 4 Summary Stat Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-8">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-8">
           <div className="bg-white rounded-xl border border-gray-200 p-4 shadow-xs">
             <div className="flex items-center justify-between text-slate-500 text-xs font-semibold uppercase tracking-wider mb-1">
               <span>Total Users</span>
@@ -262,7 +266,56 @@ export default function UsersPage() {
           </div>
         ) : (
           <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
-            <div className="overflow-x-auto">
+            {/* Mobile / Tablet Responsive Cards: 2 or 3 in each row */}
+            <div className="md:hidden grid grid-cols-1 sm:grid-cols-2 gap-3 p-3">
+              {filteredUsers.length === 0 ? (
+                <p className="col-span-full py-8 text-center text-sm text-gray-400">
+                  No team members found matching your search.
+                </p>
+              ) : (
+                filteredUsers.map((u) => (
+                  <div
+                    key={u._id}
+                    className="bg-slate-50/70 rounded-xl border border-gray-100 p-3.5 shadow-xs flex flex-col justify-between"
+                  >
+                    <div>
+                      <div className="flex items-start justify-between gap-2 mb-2">
+                        <div className="flex items-center gap-2">
+                          <div className="h-8 w-8 rounded-full bg-teal-100 text-teal-700 flex items-center justify-center font-bold text-xs shrink-0">
+                            {u.name.charAt(0)}
+                          </div>
+                          <div>
+                            <span className="text-xs font-bold text-gray-900 block truncate max-w-[140px]">{u.name}</span>
+                            <span className="text-[11px] text-gray-500 block truncate max-w-[140px]">{u.email}</span>
+                          </div>
+                        </div>
+                        <span
+                          className={`text-[10px] font-bold px-2 py-0.5 rounded-full shrink-0 ${
+                            u.role === 'Admin'
+                              ? 'bg-purple-100 text-purple-800'
+                              : u.role === 'Reviewer'
+                              ? 'bg-amber-100 text-amber-800'
+                              : 'bg-teal-100 text-teal-800'
+                          }`}
+                        >
+                          {u.role}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center justify-between pt-2 border-t border-gray-200/50 text-[11px] text-gray-500">
+                      <span>{u.department || 'Fund Operations'}</span>
+                      <span className="text-emerald-600 font-semibold inline-flex items-center gap-1">
+                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" /> Active
+                      </span>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+
+            {/* Desktop Full Table */}
+            <div className="hidden md:block overflow-x-auto">
               <table className="w-full text-left text-sm">
                 <thead className="bg-gray-50/80 border-b border-gray-200 text-gray-500 text-xs uppercase font-semibold">
                   <tr>

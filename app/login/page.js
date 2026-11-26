@@ -110,8 +110,11 @@ export default function LoginPage() {
           
           {/* Card Title */}
           <div className="mb-6">
-            <h2 className="text-2xl font-bold text-slate-900 tracking-tight">Institutional Portal</h2>
-            <p className="text-sm text-slate-500 mt-1">
+            <h2 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight leading-snug">
+              <span className="block sm:inline">Institutional Portal</span>{' '}
+              <span className="block sm:inline text-teal-700">Authentication</span>
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-500 mt-1">
               Sign in to manage portfolio disclosures and review LP reports
             </p>
           </div>
@@ -125,7 +128,7 @@ export default function LoginPage() {
               <span className="text-[11px] text-teal-600 font-semibold">1-Click Auto-Fill</span>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-2.5">
+            <div className="grid grid-cols-3 gap-1.5 sm:gap-2.5">
               {DEMO_ACCOUNTS.map((acc) => {
                 const isSelected = selectedDemo === acc.role;
                 return (
@@ -133,20 +136,20 @@ export default function LoginPage() {
                     key={acc.role}
                     type="button"
                     onClick={() => handleSelectDemo(acc)}
-                    className={`p-3 rounded-xl text-left border transition-all cursor-pointer ${
+                    className={`p-2 sm:p-3 rounded-xl text-left border transition-all cursor-pointer ${
                       isSelected
                         ? 'bg-teal-50/70 border-teal-500 text-slate-900 shadow-sm ring-2 ring-teal-500/20'
                         : 'bg-slate-50/60 border-slate-200 hover:border-slate-300 hover:bg-slate-50 text-slate-700'
                     }`}
                   >
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="text-xs font-bold text-slate-900">{acc.role}</span>
+                    <div className="flex items-center justify-between mb-0.5 sm:mb-1">
+                      <span className="text-xs font-bold text-slate-900 truncate">{acc.role}</span>
                       {isSelected && (
-                        <CheckCircle2 size={13} className="text-teal-600 shrink-0" />
+                        <CheckCircle2 size={12} className="text-teal-600 shrink-0" />
                       )}
                     </div>
-                    <div className="text-xs text-slate-500">{acc.name}</div>
-                    <div className="text-[10px] text-teal-600 font-medium tracking-tight mt-1 truncate">
+                    <div className="text-[11px] sm:text-xs text-slate-500 truncate">{acc.name}</div>
+                    <div className="text-[9px] sm:text-[10px] text-teal-600 font-medium tracking-tight mt-0.5 sm:mt-1 truncate">
                       {acc.tag}
                     </div>
                   </button>

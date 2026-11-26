@@ -87,7 +87,7 @@ export default function FundDetailPage() {
                 {fund.description || 'No fund description.'}
               </p>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 p-4 bg-gray-50 rounded-xl text-xs">
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4 p-4 bg-gray-50 rounded-xl text-xs">
                 <div>
                   <span className="text-gray-400">Target Fund Size</span>
                   <p className="text-sm font-bold text-gray-900">
@@ -114,16 +114,16 @@ export default function FundDetailPage() {
             </div>
 
             {/* Companies Table */}
-            <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
+            <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-5 sm:p-6">
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-lg font-bold text-gray-900">
+                <h2 className="text-base sm:text-lg font-bold text-gray-900">
                   Portfolio Companies ({fund.companies?.length || 0})
                 </h2>
                 <Link
                   href="/companies"
-                  className="text-xs text-blue-600 hover:text-blue-800 font-medium"
+                  className="text-xs text-teal-600 hover:text-teal-800 font-semibold"
                 >
-                  Manage All Companies →
+                  Manage All →
                 </Link>
               </div>
 
@@ -132,47 +132,98 @@ export default function FundDetailPage() {
                   No portfolio companies associated with this fund yet.
                 </p>
               ) : (
-                <div className="overflow-x-auto">
-                  <table className="w-full text-left text-sm">
-                    <thead>
-                      <tr className="border-b border-gray-200 text-gray-400 text-xs uppercase">
-                        <th className="pb-3">Company</th>
-                        <th className="pb-3">Industry</th>
-                        <th className="pb-3">Invested (₹)</th>
-                        <th className="pb-3">Current Valuation</th>
-                        <th className="pb-3">Reporting Status</th>
-                        <th className="pb-3 text-right">Action</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-gray-100">
-                      {fund.companies.map((comp) => (
-                        <tr key={comp._id} className="hover:bg-gray-50 transition">
-                          <td className="py-4 font-semibold text-gray-900">
-                            {comp.name}
-                          </td>
-                          <td className="py-4 text-xs text-gray-600">{comp.industry}</td>
-                          <td className="py-4 text-xs font-medium text-gray-800">
-                            {formatMoney(comp.initialInvestmentAmount)}
-                          </td>
-                          <td className="py-4 text-xs font-bold text-gray-900">
-                            {formatMoney(comp.currentValuation)}
-                          </td>
-                          <td className="py-4">
+                <>
+                  {/* Mobile / Tablet Responsive Cards: 2 or 3 in each row */}
+                  <div className="md:hidden grid grid-cols-1 sm:grid-cols-2 gap-3 mb-2">
+                    {fund.companies.map((comp) => (
+                      <div
+                        key={comp._id}
+                        className="bg-slate-50/70 rounded-xl border border-gray-200 p-3.5 shadow-xs flex flex-col justify-between"
+                      >
+                        <div>
+                          <div className="flex items-start justify-between gap-2 mb-1.5">
+                            <div>
+                              <h3 className="text-xs font-bold text-gray-900">
+                                {comp.name}
+                              </h3>
+                              <p className="text-[10px] text-gray-500">
+                                {comp.industry}
+                              </p>
+                            </div>
                             <StatusBadge status={comp.reportingStatus} size="sm" />
-                          </td>
-                          <td className="py-4 text-right">
-                            <Link
-                              href={`/companies/${comp._id}`}
-                              className="text-xs text-blue-600 hover:underline font-semibold"
-                            >
-                              View Asset
-                            </Link>
-                          </td>
+                          </div>
+
+                          <div className="grid grid-cols-2 gap-2 my-2.5 p-2 bg-white rounded-lg border border-gray-100 text-xs">
+                            <div>
+                              <span className="text-[10px] text-gray-400 block uppercase">Invested</span>
+                              <span className="font-mono text-gray-700">
+                                {formatMoney(comp.initialInvestmentAmount)}
+                              </span>
+                            </div>
+                            <div>
+                              <span className="text-[10px] text-gray-400 block uppercase">Valuation</span>
+                              <span className="font-mono font-bold text-teal-700">
+                                {formatMoney(comp.currentValuation)}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="pt-2 border-t border-gray-200/60 text-right">
+                          <Link
+                            href={`/companies/${comp._id}`}
+                            className="text-xs text-teal-600 hover:underline font-semibold"
+                          >
+                            View Asset →
+                          </Link>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Desktop Full Table */}
+                  <div className="hidden md:block overflow-x-auto">
+                    <table className="w-full text-left text-sm">
+                      <thead>
+                        <tr className="border-b border-gray-200 text-gray-400 text-xs uppercase">
+                          <th className="pb-3">Company</th>
+                          <th className="pb-3">Industry</th>
+                          <th className="pb-3">Invested (₹)</th>
+                          <th className="pb-3">Current Valuation</th>
+                          <th className="pb-3">Reporting Status</th>
+                          <th className="pb-3 text-right">Action</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
+                      </thead>
+                      <tbody className="divide-y divide-gray-100">
+                        {fund.companies.map((comp) => (
+                          <tr key={comp._id} className="hover:bg-gray-50 transition">
+                            <td className="py-4 font-semibold text-gray-900">
+                              {comp.name}
+                            </td>
+                            <td className="py-4 text-xs text-gray-600">{comp.industry}</td>
+                            <td className="py-4 text-xs font-medium text-gray-800">
+                              {formatMoney(comp.initialInvestmentAmount)}
+                            </td>
+                            <td className="py-4 text-xs font-bold text-gray-900">
+                              {formatMoney(comp.currentValuation)}
+                            </td>
+                            <td className="py-4">
+                              <StatusBadge status={comp.reportingStatus} size="sm" />
+                            </td>
+                            <td className="py-4 text-right">
+                              <Link
+                                href={`/companies/${comp._id}`}
+                                className="text-xs text-blue-600 hover:underline font-semibold"
+                              >
+                                View Asset
+                              </Link>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </>
               )}
             </div>
           </div>

@@ -66,10 +66,11 @@ export default function RegisterPage() {
         {/* Card */}
         <div className="bg-white rounded-2xl border border-slate-200/90 shadow-xl shadow-slate-200/60 p-5 sm:p-8">
           <div className="mb-6">
-            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">
-              Create your account
+            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 leading-snug">
+              <span className="block sm:inline">Create Your</span>{' '}
+              <span className="block sm:inline text-teal-700">Institutional Account</span>
             </h1>
-            <p className="mt-1 text-sm text-slate-500">
+            <p className="mt-1 text-xs sm:text-sm text-slate-500">
               Provision credentials for the PE LP Reporting platform
             </p>
           </div>

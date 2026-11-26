@@ -43,9 +43,13 @@ export default function RisksPage() {
       <main className="flex-1 min-w-0 lg:ml-[260px] px-4 pt-20 pb-8 sm:px-6 lg:p-8">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">Portfolio Risk Intelligence</h1>
-            <p className="text-sm text-gray-500">
-              AI-monitored operational vulnerabilities, margin compression alerts, and liquidity flags
+            <h1 className="text-xl sm:text-2xl font-bold text-gray-900 leading-snug">
+              <span className="block sm:inline">Portfolio Risk</span>{' '}
+              <span className="block sm:inline">Intelligence &amp; Alerts</span>
+            </h1>
+            <p className="text-xs sm:text-sm text-gray-500 mt-1">
+              <span className="block sm:inline">AI-monitored operational vulnerabilities,</span>{' '}
+              <span className="block sm:inline">margin compression alerts, and liquidity flags</span>
             </p>
           </div>
 
@@ -90,7 +94,7 @@ export default function RisksPage() {
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {filteredRisks.map((risk) => {
               const isHigh = risk.severity === 'High';
               const isMed = risk.severity === 'Medium';

@@ -43,36 +43,37 @@ export default function MetricsCard({
     <div
       className={`
         bg-white rounded-xl border border-slate-200/90 shadow-xs
-        p-5 flex items-start gap-4 transition-all duration-200 hover:shadow-md hover:border-slate-300
+        p-3.5 sm:p-5 flex flex-col sm:flex-row items-start gap-2.5 sm:gap-4 transition-all duration-200 hover:shadow-md hover:border-slate-300
         ${className}
       `}
     >
       {/* Icon circle */}
       {Icon && (
-        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-teal-50 text-teal-600 border border-teal-100/70">
-          <Icon size={20} />
+        <div className="flex h-9 w-9 sm:h-11 sm:w-11 shrink-0 items-center justify-center rounded-xl bg-teal-50 text-teal-600 border border-teal-100/70">
+          <Icon size={18} className="sm:hidden" />
+          <Icon size={20} className="hidden sm:block" />
         </div>
       )}
 
       {/* Text content */}
-      <div className="min-w-0 flex-1">
-        <p className="text-xs font-semibold uppercase tracking-wider text-slate-500 truncate">{title}</p>
-        <p className="mt-1 text-2xl font-bold tracking-tight text-slate-900 font-mono truncate">{value}</p>
+      <div className="min-w-0 flex-1 w-full">
+        <p className="text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-slate-500 truncate">{title}</p>
+        <p className="mt-0.5 sm:mt-1 text-lg sm:text-2xl font-bold tracking-tight text-slate-900 font-mono truncate">{value}</p>
 
-        <div className="mt-1.5 flex items-center gap-2">
+        <div className="mt-1 sm:mt-1.5 flex flex-wrap items-center gap-1.5 sm:gap-2">
           {/* Trend pill */}
           {trend && (
             <span
-              className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium ${trendClass}`}
+              className={`inline-flex items-center gap-1 rounded-full px-1.5 sm:px-2 py-0.5 text-[10px] sm:text-xs font-medium ${trendClass}`}
             >
-              <TrendIcon size={12} />
+              <TrendIcon size={11} />
               {trend}
             </span>
           )}
 
           {/* Subtitle */}
           {subtitle && (
-            <span className="text-xs text-slate-400 truncate">{subtitle}</span>
+            <span className="text-[10px] sm:text-xs text-slate-400 truncate">{subtitle}</span>
           )}
         </div>
       </div>

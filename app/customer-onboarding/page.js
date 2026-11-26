@@ -152,8 +152,9 @@ export default function CustomerOnboardingPage() {
             <Compass size={14} className="text-teal-600" />
             Customer Fast-Track Setup
           </div>
-          <h1 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-            Configure Your Fund Reporting Portal
+          <h1 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-snug">
+            <span className="block sm:inline">Configure Your Fund</span>{' '}
+            <span className="block sm:inline">Reporting Portal</span>
           </h1>
           <p className="text-slate-600 text-xs sm:text-base mt-2 max-w-xl mx-auto">
             Fill in the required information marked with a red star (<span className="text-red-500 font-bold">*</span>) to proceed through each onboarding stage.
@@ -211,9 +212,12 @@ export default function CustomerOnboardingPage() {
           {currentStep === 1 && (
             <div className="space-y-5">
               <div className="border-b border-slate-100 pb-3">
-                <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
-                  <Building2 size={22} className="text-blue-600" />
-                  Step 1: Entity & Primary Fund Vehicle
+                <h2 className="text-lg sm:text-xl font-bold text-slate-900 flex items-center gap-2 leading-snug">
+                  <Building2 size={22} className="text-blue-600 shrink-0" />
+                  <span>
+                    <span className="block sm:inline">Step 1: Entity &amp;</span>{' '}
+                    <span className="block sm:inline">Primary Fund Vehicle</span>
+                  </span>
                 </h2>
                 <p className="text-xs text-slate-500 mt-1">
                   All fields with (<span className="text-red-500 font-bold">*</span>) are mandatory to initialize your portfolio space.
@@ -320,9 +324,12 @@ export default function CustomerOnboardingPage() {
           {currentStep === 2 && (
             <div className="space-y-5">
               <div className="border-b border-slate-100 pb-3">
-                <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
-                  <FileSpreadsheet size={22} className="text-blue-600" />
-                  Step 2: Fund Parameters & Reporting Cadence
+                <h2 className="text-lg sm:text-xl font-bold text-slate-900 flex items-center gap-2 leading-snug">
+                  <FileSpreadsheet size={22} className="text-blue-600 shrink-0" />
+                  <span>
+                    <span className="block sm:inline">Step 2: Fund Parameters</span>{' '}
+                    <span className="block sm:inline">&amp; Reporting Cadence</span>
+                  </span>
                 </h2>
                 <p className="text-xs text-slate-500 mt-1">
                   Specify accounting standards and reporting frequencies required by your Limited Partners.
@@ -394,9 +401,12 @@ export default function CustomerOnboardingPage() {
           {currentStep === 3 && (
             <div className="space-y-6">
               <div className="border-b border-slate-100 pb-3">
-                <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
-                  <UploadCloud size={22} className="text-blue-600" />
-                  Step 3: Ingest Quarterly Portfolio Filing
+                <h2 className="text-lg sm:text-xl font-bold text-slate-900 flex items-center gap-2 leading-snug">
+                  <UploadCloud size={22} className="text-blue-600 shrink-0" />
+                  <span>
+                    <span className="block sm:inline">Step 3: Ingest Quarterly</span>{' '}
+                    <span className="block sm:inline">Portfolio Filing</span>
+                  </span>
                 </h2>
                 <p className="text-xs text-slate-500 mt-1">
                   Upload raw portfolio company reports (CSV, PDF, Excel) for automated AI parsing and metric extraction.
@@ -433,9 +443,12 @@ export default function CustomerOnboardingPage() {
           {currentStep === 4 && (
             <div className="space-y-6">
               <div className="border-b border-slate-100 pb-3">
-                <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
-                  <Sparkles size={22} className="text-blue-600" />
-                  Step 4: Launch Institutional Portal
+                <h2 className="text-lg sm:text-xl font-bold text-slate-900 flex items-center gap-2 leading-snug">
+                  <Sparkles size={22} className="text-blue-600 shrink-0" />
+                  <span>
+                    <span className="block sm:inline">Step 4: Launch Institutional</span>{' '}
+                    <span className="block sm:inline">Portal Workspace</span>
+                  </span>
                 </h2>
                 <p className="text-xs text-slate-500 mt-1">
                   Your fund mandate, KPI triggers, and sample filings have been compiled and verified.

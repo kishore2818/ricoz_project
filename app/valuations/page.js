@@ -66,8 +66,11 @@ export default function ValuationsPage() {
       <main className="flex-1 min-w-0 lg:ml-[260px] px-4 pt-20 pb-8 sm:px-6 lg:p-8">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">Portfolio Valuation Analysis</h1>
-            <p className="text-sm text-gray-500">
+            <h1 className="text-xl sm:text-2xl font-bold text-gray-900 leading-snug">
+              <span className="block sm:inline">Portfolio Valuation</span>{' '}
+              <span className="block sm:inline">Analysis &amp; Ledgers</span>
+            </h1>
+            <p className="text-xs sm:text-sm text-gray-500 mt-1">
               Fair market valuations pursuant to IPEV and ASC 820 mark-to-market guidelines
             </p>
           </div>
@@ -139,82 +142,160 @@ export default function ValuationsPage() {
                   No valuation records found.
                 </p>
               ) : (
-                <div className="overflow-x-auto">
-                  <table className="w-full text-left text-sm">
-                    <thead>
-                      <tr className="border-b border-gray-200 text-gray-400 text-xs uppercase">
-                        <th className="pb-3">Company</th>
-                        <th className="pb-3">Period</th>
-                        <th className="pb-3">Initial Cost</th>
-                        <th className="pb-3">Prior Valuation</th>
-                        <th className="pb-3">Current Valuation</th>
-                        <th className="pb-3">Change (₹)</th>
-                        <th className="pb-3">Growth (%)</th>
-                        <th className="pb-3 text-right">Verification</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-gray-100">
-                      {valuations.map((v) => {
-                        const isPositive = v.valuationChange > 0;
-                        const isNegative = v.valuationChange < 0;
+                <>
+                  {/* Mobile / Tablet Responsive Cards: 2 or 3 in each row */}
+                  <div className="md:hidden grid grid-cols-1 sm:grid-cols-2 gap-3 mb-2">
+                    {valuations.map((v) => {
+                      const isPositive = v.valuationChange > 0;
+                      const isNegative = v.valuationChange < 0;
 
-                        return (
-                          <tr key={v._id} className="hover:bg-gray-50 transition">
-                            <td className="py-4 font-semibold text-gray-900">
-                              {v.companyId?.name}
-                            </td>
-                            <td className="py-4 text-xs text-gray-600 font-medium">
-                              {v.reportingQuarter} {v.reportingYear}
-                            </td>
-                            <td className="py-4 text-xs font-medium text-gray-700">
-                              {formatMoney(v.initialInvestmentAmount)}
-                            </td>
-                            <td className="py-4 text-xs text-gray-600">
-                              {formatMoney(v.previousValuation)}
-                            </td>
-                            <td className="py-4 text-xs font-bold text-gray-900">
-                              {formatMoney(v.currentValuation)}
-                            </td>
-                            <td className="py-4 text-xs font-bold">
-                              <span
-                                className={`inline-flex items-center gap-1 ${
-                                  isPositive
-                                    ? 'text-emerald-600'
-                                    : isNegative
-                                    ? 'text-red-600'
-                                    : 'text-gray-600'
-                                }`}
-                              >
-                                {isPositive && <ArrowUpRight className="w-3.5 h-3.5" />}
-                                {isNegative && <ArrowDownRight className="w-3.5 h-3.5" />}
-                                {!isPositive && !isNegative && <Minus className="w-3.5 h-3.5" />}
-                                {isPositive ? '+' : ''}
-                                {formatMoney(v.valuationChange)}
-                              </span>
-                            </td>
-                            <td className="py-4 text-xs font-bold">
-                              <span
-                                className={`px-2 py-0.5 rounded-full text-[11px] font-semibold ${
-                                  isPositive
-                                    ? 'bg-emerald-50 text-emerald-700'
-                                    : isNegative
-                                    ? 'bg-red-50 text-red-700'
-                                    : 'bg-gray-100 text-gray-700'
-                                }`}
-                              >
-                                {v.valuationGrowthPercent >= 0 ? '+' : ''}
-                                {v.valuationGrowthPercent}%
-                              </span>
-                            </td>
-                            <td className="py-4 text-right">
+                      return (
+                        <div
+                          key={v._id}
+                          className="bg-slate-50/70 rounded-xl border border-gray-200 p-3.5 shadow-xs flex flex-col justify-between"
+                        >
+                          <div>
+                            <div className="flex items-start justify-between gap-2 mb-2">
+                              <div>
+                                <h3 className="text-sm font-bold text-gray-900 leading-tight">
+                                  {v.companyId?.name}
+                                </h3>
+                                <p className="text-[11px] text-gray-500 mt-0.5">
+                                  {v.reportingQuarter} {v.reportingYear}
+                                </p>
+                              </div>
                               <StatusBadge status={v.verificationStatus} size="sm" />
-                            </td>
-                          </tr>
-                        );
-                      })}
-                    </tbody>
-                  </table>
-                </div>
+                            </div>
+
+                            <div className="grid grid-cols-2 gap-2 my-2.5 p-2 bg-white rounded-lg border border-gray-100 text-xs">
+                              <div>
+                                <span className="text-[10px] text-gray-400 block uppercase">Current Val</span>
+                                <span className="font-mono font-bold text-gray-900">
+                                  {formatMoney(v.currentValuation)}
+                                </span>
+                              </div>
+                              <div>
+                                <span className="text-[10px] text-gray-400 block uppercase">Initial Cost</span>
+                                <span className="font-mono text-gray-700">
+                                  {formatMoney(v.initialInvestmentAmount)}
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="flex items-center justify-between pt-2 border-t border-gray-200/60 text-xs">
+                            <span
+                              className={`inline-flex items-center gap-1 font-bold ${
+                                isPositive
+                                  ? 'text-emerald-600'
+                                  : isNegative
+                                  ? 'text-red-600'
+                                  : 'text-gray-600'
+                              }`}
+                            >
+                              {isPositive && <ArrowUpRight className="w-3.5 h-3.5" />}
+                              {isNegative && <ArrowDownRight className="w-3.5 h-3.5" />}
+                              {!isPositive && !isNegative && <Minus className="w-3.5 h-3.5" />}
+                              {isPositive ? '+' : ''}
+                              {formatMoney(v.valuationChange)}
+                            </span>
+
+                            <span
+                              className={`px-2 py-0.5 rounded-full text-[11px] font-semibold ${
+                                isPositive
+                                  ? 'bg-emerald-50 text-emerald-700'
+                                  : isNegative
+                                  ? 'bg-red-50 text-red-700'
+                                  : 'bg-gray-100 text-gray-700'
+                              }`}
+                            >
+                              {v.valuationGrowthPercent >= 0 ? '+' : ''}
+                              {v.valuationGrowthPercent}%
+                            </span>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  {/* Desktop Full Table */}
+                  <div className="hidden md:block overflow-x-auto">
+                    <table className="w-full text-left text-sm">
+                      <thead>
+                        <tr className="border-b border-gray-200 text-gray-400 text-xs uppercase">
+                          <th className="pb-3">Company</th>
+                          <th className="pb-3">Period</th>
+                          <th className="pb-3">Initial Cost</th>
+                          <th className="pb-3">Prior Valuation</th>
+                          <th className="pb-3">Current Valuation</th>
+                          <th className="pb-3">Change (₹)</th>
+                          <th className="pb-3">Growth (%)</th>
+                          <th className="pb-3 text-right">Verification</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-gray-100">
+                        {valuations.map((v) => {
+                          const isPositive = v.valuationChange > 0;
+                          const isNegative = v.valuationChange < 0;
+
+                          return (
+                            <tr key={v._id} className="hover:bg-gray-50 transition">
+                              <td className="py-4 font-semibold text-gray-900">
+                                {v.companyId?.name}
+                              </td>
+                              <td className="py-4 text-xs text-gray-600 font-medium">
+                                {v.reportingQuarter} {v.reportingYear}
+                              </td>
+                              <td className="py-4 text-xs font-medium text-gray-700">
+                                {formatMoney(v.initialInvestmentAmount)}
+                              </td>
+                              <td className="py-4 text-xs text-gray-600">
+                                {formatMoney(v.previousValuation)}
+                              </td>
+                              <td className="py-4 text-xs font-bold text-gray-900">
+                                {formatMoney(v.currentValuation)}
+                              </td>
+                              <td className="py-4 text-xs font-bold">
+                                <span
+                                  className={`inline-flex items-center gap-1 ${
+                                    isPositive
+                                      ? 'text-emerald-600'
+                                      : isNegative
+                                      ? 'text-red-600'
+                                      : 'text-gray-600'
+                                  }`}
+                                >
+                                  {isPositive && <ArrowUpRight className="w-3.5 h-3.5" />}
+                                  {isNegative && <ArrowDownRight className="w-3.5 h-3.5" />}
+                                  {!isPositive && !isNegative && <Minus className="w-3.5 h-3.5" />}
+                                  {isPositive ? '+' : ''}
+                                  {formatMoney(v.valuationChange)}
+                                </span>
+                              </td>
+                              <td className="py-4 text-xs font-bold">
+                                <span
+                                  className={`px-2 py-0.5 rounded-full text-[11px] font-semibold ${
+                                    isPositive
+                                      ? 'bg-emerald-50 text-emerald-700'
+                                      : isNegative
+                                      ? 'bg-red-50 text-red-700'
+                                      : 'bg-gray-100 text-gray-700'
+                                  }`}
+                                >
+                                  {v.valuationGrowthPercent >= 0 ? '+' : ''}
+                                  {v.valuationGrowthPercent}%
+                                </span>
+                              </td>
+                              <td className="py-4 text-right">
+                                <StatusBadge status={v.verificationStatus} size="sm" />
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
+                </>
               )}
             </div>
           </div>

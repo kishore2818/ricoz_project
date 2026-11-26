@@ -86,8 +86,11 @@ export default function KPIAnalyticsPage() {
       <main className="flex-1 min-w-0 lg:ml-[260px] px-4 pt-20 pb-8 sm:px-6 lg:p-8">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">Portfolio KPI Analytics</h1>
-            <p className="text-sm text-gray-500">
+            <h1 className="text-xl sm:text-2xl font-bold text-gray-900 leading-snug">
+              <span className="block sm:inline">Portfolio KPI</span>{' '}
+              <span className="block sm:inline">Analytics &amp; Benchmarks</span>
+            </h1>
+            <p className="text-xs sm:text-sm text-gray-500 mt-1">
               Cross-asset comparative benchmarking and KPI trend analytics
             </p>
           </div>
@@ -181,50 +184,93 @@ export default function KPIAnalyticsPage() {
                   No records to display.
                 </p>
               ) : (
-                <div className="overflow-x-auto">
-                  <table className="w-full text-left text-sm">
-                    <thead>
-                      <tr className="border-b border-gray-200 text-gray-400 text-xs uppercase">
-                        <th className="pb-3">Company</th>
-                        <th className="pb-3">Industry</th>
-                        <th className="pb-3">Fund</th>
-                        <th className="pb-3">Quarter</th>
-                        <th className="pb-3">Value</th>
-                        <th className="pb-3">Audit Source</th>
-                        <th className="pb-3 text-right">Status</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-gray-100">
-                      {kpis.map((kpi) => (
-                        <tr key={kpi._id} className="hover:bg-gray-50 transition">
-                          <td className="py-3 font-semibold text-gray-900">
-                            {kpi.companyId?.name}
-                          </td>
-                          <td className="py-3 text-xs text-gray-500">
-                            {kpi.companyId?.industry}
-                          </td>
-                          <td className="py-3 text-xs font-mono text-gray-600">
-                            {kpi.fundId?.identifier}
-                          </td>
-                          <td className="py-3 text-xs font-medium text-gray-800">
-                            {kpi.reportingQuarter} {kpi.reportingYear}
-                          </td>
-                          <td className="py-3 font-mono font-bold text-gray-900">
-                            {kpi.unitOrCurrency === 'USD' || kpi.unitOrCurrency === 'INR' ? '₹' : ''}
-                            {Number(kpi.extractedValue).toLocaleString('en-IN')}{' '}
-                            {kpi.unitOrCurrency !== 'USD' && kpi.unitOrCurrency !== 'INR' ? kpi.unitOrCurrency : ''}
-                          </td>
-                          <td className="py-3 text-xs text-gray-500 max-w-xs truncate">
-                            p. {kpi.sourcePageNumber || 1}
-                          </td>
-                          <td className="py-3 text-right">
+                <>
+                  {/* Mobile / Tablet Responsive Cards: 2 or 3 in each row */}
+                  <div className="md:hidden grid grid-cols-1 sm:grid-cols-2 gap-3 mb-2">
+                    {kpis.map((kpi) => (
+                      <div
+                        key={kpi._id}
+                        className="bg-slate-50/70 rounded-xl border border-gray-200 p-3.5 shadow-xs flex flex-col justify-between"
+                      >
+                        <div>
+                          <div className="flex items-start justify-between gap-2 mb-1.5">
+                            <div>
+                              <h3 className="text-xs font-bold text-gray-900 truncate">
+                                {kpi.companyId?.name}
+                              </h3>
+                              <p className="text-[10px] text-gray-500">
+                                {kpi.companyId?.industry} • {kpi.fundId?.identifier}
+                              </p>
+                            </div>
                             <StatusBadge status={kpi.verificationStatus} size="sm" />
-                          </td>
+                          </div>
+
+                          <div className="my-2.5 p-2 bg-white rounded-lg border border-gray-100">
+                            <span className="text-[10px] text-gray-400 block uppercase font-medium">{metricName}</span>
+                            <span className="font-mono font-bold text-base text-gray-900">
+                              {kpi.unitOrCurrency === 'USD' || kpi.unitOrCurrency === 'INR' ? '₹' : ''}
+                              {Number(kpi.extractedValue).toLocaleString('en-IN')}{' '}
+                              {kpi.unitOrCurrency !== 'USD' && kpi.unitOrCurrency !== 'INR' ? kpi.unitOrCurrency : ''}
+                            </span>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center justify-between pt-2 border-t border-gray-200/60 text-[11px] text-gray-500">
+                          <span className="font-medium text-gray-700">
+                            {kpi.reportingQuarter} {kpi.reportingYear}
+                          </span>
+                          <span>p. {kpi.sourcePageNumber || 1}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Desktop Full Table */}
+                  <div className="hidden md:block overflow-x-auto">
+                    <table className="w-full text-left text-sm">
+                      <thead>
+                        <tr className="border-b border-gray-200 text-gray-400 text-xs uppercase">
+                          <th className="pb-3">Company</th>
+                          <th className="pb-3">Industry</th>
+                          <th className="pb-3">Fund</th>
+                          <th className="pb-3">Quarter</th>
+                          <th className="pb-3">Value</th>
+                          <th className="pb-3">Audit Source</th>
+                          <th className="pb-3 text-right">Status</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
+                      </thead>
+                      <tbody className="divide-y divide-gray-100">
+                        {kpis.map((kpi) => (
+                          <tr key={kpi._id} className="hover:bg-gray-50 transition">
+                            <td className="py-3 font-semibold text-gray-900">
+                              {kpi.companyId?.name}
+                            </td>
+                            <td className="py-3 text-xs text-gray-500">
+                              {kpi.companyId?.industry}
+                            </td>
+                            <td className="py-3 text-xs font-mono text-gray-600">
+                              {kpi.fundId?.identifier}
+                            </td>
+                            <td className="py-3 text-xs font-medium text-gray-800">
+                              {kpi.reportingQuarter} {kpi.reportingYear}
+                            </td>
+                            <td className="py-3 font-mono font-bold text-gray-900">
+                              {kpi.unitOrCurrency === 'USD' || kpi.unitOrCurrency === 'INR' ? '₹' : ''}
+                              {Number(kpi.extractedValue).toLocaleString('en-IN')}{' '}
+                              {kpi.unitOrCurrency !== 'USD' && kpi.unitOrCurrency !== 'INR' ? kpi.unitOrCurrency : ''}
+                            </td>
+                            <td className="py-3 text-xs text-gray-500 max-w-xs truncate">
+                              p. {kpi.sourcePageNumber || 1}
+                            </td>
+                            <td className="py-3 text-right">
+                              <StatusBadge status={kpi.verificationStatus} size="sm" />
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </>
               )}
             </div>
           </div>
