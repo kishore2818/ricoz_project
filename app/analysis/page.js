@@ -196,41 +196,41 @@ function AnalysisContent() {
               ) : (
                 <>
                   {/* Mobile / Tablet Responsive Cards: 2 or 3 in each row */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 mb-4">
+                  <div className="grid grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-3.5 mb-4">
                     {analysisData.kpis.map((kpi) => (
                       <div
                         key={kpi._id}
-                        className="bg-slate-50/70 hover:bg-white rounded-xl border border-slate-200/90 p-3.5 transition-all shadow-xs flex flex-col justify-between"
+                        className="bg-slate-50/70 hover:bg-white rounded-xl border border-slate-200/90 p-2.5 sm:p-3.5 transition-all shadow-xs flex flex-col justify-between"
                       >
                         <div>
-                          <div className="flex items-start justify-between gap-2 mb-2">
-                            <span className="text-[10px] font-bold uppercase tracking-wider text-teal-700 bg-teal-50 px-2 py-0.5 rounded border border-teal-200">
+                          <div className="flex items-start justify-between gap-1 mb-1.5">
+                            <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-teal-700 bg-teal-50 px-1.5 py-0.5 rounded border border-teal-200 truncate max-w-[85px]">
                               {kpi.category}
                             </span>
                             <StatusBadge status={kpi.verificationStatus} size="sm" />
                           </div>
-                          <h4 className="text-xs sm:text-sm font-bold text-slate-900 line-clamp-2 mb-1.5">
+                          <h4 className="text-[11px] sm:text-xs font-bold text-slate-900 line-clamp-2 mb-1 leading-snug">
                             {kpi.metricName}
                           </h4>
-                          <div className="flex items-baseline gap-2 mb-2">
-                            <span className="text-base sm:text-lg font-bold font-mono text-slate-900">
+                          <div className="flex flex-wrap items-baseline gap-1 sm:gap-1.5 mb-1.5">
+                            <span className="text-sm sm:text-base font-bold font-mono text-slate-900">
                               {formatKPIValue(kpi.extractedValue, kpi.unitOrCurrency)}
                             </span>
                             {kpi.isCalculated ? (
-                              <span className="text-[10px] font-semibold text-indigo-700 bg-indigo-50 px-1.5 py-0.5 rounded">
-                                Calculated
+                              <span className="text-[9px] font-semibold text-indigo-700 bg-indigo-50 px-1 py-0.5 rounded">
+                                Calc
                               </span>
                             ) : (
-                              <span className="text-[10px] font-semibold text-slate-600 bg-slate-100 px-1.5 py-0.5 rounded">
-                                Reported
+                              <span className="text-[9px] font-semibold text-slate-600 bg-slate-100 px-1 py-0.5 rounded">
+                                Rep
                               </span>
                             )}
                           </div>
                         </div>
 
-                        <div className="pt-2 border-t border-slate-200/60 flex items-center justify-between text-[11px] text-slate-500">
-                          <span>Confidence: <strong className="text-slate-800">{Math.round((kpi.confidence || 0) * 100)}%</strong></span>
-                          <span className="truncate max-w-[120px]" title={kpi.sourceSnippet}>
+                        <div className="pt-1.5 border-t border-slate-200/60 flex items-center justify-between text-[10px] sm:text-[11px] text-slate-500">
+                          <span>Conf: <strong className="text-slate-800">{Math.round((kpi.confidence || 0) * 100)}%</strong></span>
+                          <span className="truncate max-w-[65px] sm:max-w-[100px]" title={kpi.sourceSnippet}>
                             p. {kpi.sourcePageNumber || 1}
                           </span>
                         </div>
@@ -299,23 +299,23 @@ function AnalysisContent() {
                   No operational commentary extracted.
                 </p>
               ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-4">
+                <div className="grid grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-3.5">
                   {analysisData.narratives.map((narr) => (
                     <div
                       key={narr._id}
-                      className="p-4 rounded-xl border border-slate-200 bg-slate-50/60 hover:bg-white hover:shadow-sm transition flex flex-col justify-between"
+                      className="p-3 sm:p-4 rounded-xl border border-slate-200 bg-slate-50/60 hover:bg-white hover:shadow-sm transition flex flex-col justify-between"
                     >
                       <div>
-                        <h4 className="text-xs font-bold text-teal-800 uppercase tracking-wide mb-1.5 flex items-center gap-1.5">
+                        <h4 className="text-[11px] sm:text-xs font-bold text-teal-800 uppercase tracking-wide mb-1 flex items-center gap-1.5">
                           <CheckCircle2 className="w-3.5 h-3.5 text-teal-600 shrink-0" />
                           <span className="line-clamp-1">{narr.sectionTitle}</span>
                         </h4>
-                        <p className="text-xs text-slate-700 leading-relaxed mb-2">
+                        <p className="text-[11px] sm:text-xs text-slate-700 leading-relaxed mb-2 line-clamp-4">
                           {narr.summaryText}
                         </p>
                       </div>
                       {narr.supportingEvidence && (
-                        <p className="text-[11px] text-slate-400 italic pt-2 border-t border-slate-100">
+                        <p className="text-[10px] text-slate-400 italic pt-1.5 border-t border-slate-100 truncate">
                           Source: {narr.supportingEvidence}
                         </p>
                       )}
@@ -339,11 +339,11 @@ function AnalysisContent() {
                   No active risks flagged.
                 </p>
               ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-4">
+                <div className="grid grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-3.5">
                   {analysisData.risks.map((risk) => (
                     <div
                       key={risk._id}
-                      className={`p-4 rounded-xl border shadow-xs flex flex-col justify-between ${
+                      className={`p-3 sm:p-4 rounded-xl border shadow-xs flex flex-col justify-between ${
                         risk.severity === 'High'
                           ? 'border-red-200 bg-red-50/40'
                           : risk.severity === 'Medium'
@@ -352,9 +352,9 @@ function AnalysisContent() {
                       }`}
                     >
                       <div>
-                        <div className="flex items-center justify-between gap-2 mb-2">
+                        <div className="flex items-center justify-between gap-1 mb-1.5">
                           <span
-                            className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded-full ${
+                            className={`text-[9px] sm:text-[10px] font-bold uppercase px-1.5 py-0.5 rounded-full ${
                               risk.severity === 'High'
                                 ? 'bg-red-100 text-red-800'
                                 : risk.severity === 'Medium'
@@ -362,22 +362,22 @@ function AnalysisContent() {
                                 : 'bg-teal-100 text-teal-800'
                             }`}
                           >
-                            {risk.severity} Severity
+                            {risk.severity}
                           </span>
-                          <span className="text-[11px] text-slate-400 truncate">
+                          <span className="text-[10px] text-slate-400 truncate">
                             p. {risk.sourcePage || 1}
                           </span>
                         </div>
-                        <h4 className="text-xs sm:text-sm font-bold text-slate-900 mb-1 leading-snug">
+                        <h4 className="text-[11px] sm:text-xs font-bold text-slate-900 mb-1 leading-snug line-clamp-2">
                           {risk.title}
                         </h4>
-                        <p className="text-xs text-slate-700 mb-3 leading-relaxed">
+                        <p className="text-[10px] sm:text-xs text-slate-700 mb-2 leading-relaxed line-clamp-3">
                           {risk.description}
                         </p>
                       </div>
-                      <div className="p-2.5 bg-white/90 rounded-lg border border-slate-200/80 text-xs text-slate-800">
-                        <span className="font-bold text-slate-900 block mb-0.5">Recommended Action:</span>
-                        <span className="text-[11px] text-slate-600">{risk.recommendedAction}</span>
+                      <div className="p-2 bg-white/90 rounded-lg border border-slate-200/80 text-[10px] sm:text-xs text-slate-800">
+                        <span className="font-bold text-slate-900 block mb-0.5">Action:</span>
+                        <span className="text-[10px] text-slate-600 line-clamp-2">{risk.recommendedAction}</span>
                       </div>
                     </div>
                   ))}

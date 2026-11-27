@@ -11,7 +11,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
 import Logo from '@/components/Logo';
-import { UserPlus, ArrowRight } from 'lucide-react';
+import { UserPlus, ArrowRight, Clock, ShieldCheck } from 'lucide-react';
 
 export default function RegisterPage() {
   const { register, user, loading: authLoading } = useAuth();
@@ -23,6 +23,7 @@ export default function RegisterPage() {
   const [role, setRole] = useState('Analyst');
   const [error, setError] = useState('');
   const [submitting, setSubmitting] = useState(false);
+  const [registrationPending, setRegistrationPending] = useState(false);
 
   // If already authenticated, redirect immediately
   useEffect(() => {
@@ -37,8 +38,13 @@ export default function RegisterPage() {
     setSubmitting(true);
 
     try {
-      await register({ name, email, password, role });
-      router.push('/onboarding');
+      const res = await register({ name, email, password, role });
+      const payload = res?.data || res;
+      if (payload?.requiresApproval || res?.requiresApproval) {
+        setRegistrationPending(true);
+      } else {
+        router.push('/onboarding');
+      }
     } catch (err) {
       setError(err?.message || 'Registration failed. Please try again.');
     } finally {
@@ -65,26 +71,72 @@ export default function RegisterPage() {
 
         {/* Card */}
         <div className="bg-white rounded-2xl border border-slate-200/90 shadow-xl shadow-slate-200/60 p-5 sm:p-8">
-          <div className="mb-6">
-            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 leading-snug">
-              <span className="block sm:inline">Create Your</span>{' '}
-              <span className="block sm:inline text-teal-700">Institutional Account</span>
-            </h1>
-            <p className="mt-1 text-xs sm:text-sm text-slate-500">
-              Provision credentials for the PE LP Reporting platform
-            </p>
-          </div>
+          {registrationPending ? (
+            <div className="text-center py-4">
+              <div className="h-16 w-16 rounded-2xl bg-amber-50 border border-amber-200 text-amber-600 flex items-center justify-center mx-auto mb-4 shadow-sm animate-pulse">
+                <Clock size={32} />
+              </div>
+              <h2 className="text-xl sm:text-2xl font-bold text-slate-900 leading-snug mb-2">
+                <span className="block sm:inline">Account Registration</span>{' '}
+                <span className="block sm:inline text-amber-600">Pending Signoff</span>
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-600 max-w-sm mx-auto leading-relaxed mb-6">
+                Thank you, <strong className="text-slate-800">{name}</strong>. Your requested role of{' '}
+                <span className="px-2 py-0.5 rounded font-bold text-xs bg-amber-100 text-amber-800">{role}</span>{' '}
+                has been submitted to the Administrator queue.
+              </p>
 
-          {/* Error banner */}
-          {error && (
-            <div className="mb-4 rounded-xl bg-red-50 border border-red-200 p-3.5 text-xs text-red-700 flex items-start gap-2">
-              <span className="text-red-500 font-bold shrink-0">✕</span>
-              <span className="leading-snug">{error}</span>
+              <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 text-left text-xs text-slate-600 space-y-2 mb-6">
+                <div className="flex items-center gap-2 font-bold text-slate-800">
+                  <ShieldCheck size={16} className="text-teal-600" />
+                  <span>Institutional Governance Notice</span>
+                </div>
+                <p className="text-[11px] leading-relaxed">
+                  Under ILPA and dual-signoff compliance protocols, all newly created Analyst and Reviewer accounts must be approved by an Executive Administrator before access to portfolio company financials is activated.
+                </p>
+                <div className="pt-2 border-t border-slate-200/80 text-[11px] text-slate-500">
+                  Registered Email: <span className="font-mono font-medium text-slate-700">{email}</span>
+                </div>
+              </div>
+
+              <div className="flex flex-col sm:flex-row items-center gap-3">
+                <Link
+                  href="/login"
+                  className="w-full inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-500 hover:to-cyan-500 text-white text-xs font-bold shadow-sm transition"
+                >
+                  <span>Go to Login</span>
+                  <ArrowRight size={14} />
+                </Link>
+                <Link
+                  href="/"
+                  className="w-full inline-flex items-center justify-center px-4 py-2.5 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 text-xs font-semibold transition"
+                >
+                  Back to Home
+                </Link>
+              </div>
             </div>
-          )}
+          ) : (
+            <>
+              <div className="mb-6">
+                <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 leading-snug">
+                  <span className="block sm:inline">Create Your</span>{' '}
+                  <span className="block sm:inline text-teal-700">Institutional Account</span>
+                </h1>
+                <p className="mt-1 text-xs sm:text-sm text-slate-500">
+                  Provision credentials for the PE LP Reporting platform
+                </p>
+              </div>
 
-          {/* Form */}
-          <form onSubmit={handleSubmit} className="space-y-4">
+              {/* Error banner */}
+              {error && (
+                <div className="mb-4 rounded-xl bg-red-50 border border-red-200 p-3.5 text-xs text-red-700 flex items-start gap-2">
+                  <span className="text-red-500 font-bold shrink-0">✕</span>
+                  <span className="leading-snug">{error}</span>
+                </div>
+              )}
+
+              {/* Form */}
+              <form onSubmit={handleSubmit} className="space-y-4">
             {/* Name */}
             <div>
               <label
@@ -229,7 +281,9 @@ export default function RegisterPage() {
               Sign in
             </Link>
           </p>
-        </div>
+        </>
+      )}
+    </div>
       </div>
     </div>
   );

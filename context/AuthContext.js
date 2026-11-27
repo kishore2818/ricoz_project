@@ -65,15 +65,18 @@ export function AuthProvider({ children }) {
   const register = useCallback(async (userData) => {
     const res = await apiRegister(userData);
     const payload = res?.data || res;
+    // If the registration requires administrator signoff, do not auto-login
+    if (payload?.requiresApproval || res?.requiresApproval) {
+      return res;
+    }
     const tok = payload?.token;
     const usr = payload?.user;
-    if (!tok || !usr) {
-      throw new Error('Invalid registration response from server');
+    if (tok && usr) {
+      localStorage.setItem('token', tok);
+      localStorage.setItem('user', JSON.stringify(usr));
+      setToken(tok);
+      setUser(usr);
     }
-    localStorage.setItem('token', tok);
-    localStorage.setItem('user', JSON.stringify(usr));
-    setToken(tok);
-    setUser(usr);
     return res;
   }, []);
 

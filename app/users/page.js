@@ -3,7 +3,7 @@
 import { useEffect, useState, useMemo } from 'react';
 import Sidebar from '@/components/Sidebar';
 import LoadingSpinner from '@/components/LoadingSpinner';
-import { apiGet, apiPost } from '@/services/api';
+import { apiGet, apiPost, apiPut } from '@/services/api';
 import { useAuth } from '@/context/AuthContext';
 import {
   Users,
@@ -18,7 +18,11 @@ import {
   CheckCircle2,
   Lock,
   Building,
-  Briefcase
+  Briefcase,
+  Clock,
+  Check,
+  XCircle,
+  ShieldAlert
 } from 'lucide-react';
 
 export default function UsersPage() {
@@ -77,14 +81,43 @@ export default function UsersPage() {
     });
   }, [users, searchTerm, roleFilter]);
 
+  // Pending users awaiting Admin Signoff
+  const pendingUsers = useMemo(() => {
+    return users.filter((u) => u.approvalStatus === 'Pending' || (!u.isApproved && u.role !== 'Admin'));
+  }, [users]);
+
   // Metrics
   const stats = useMemo(() => {
     const total = users.length;
     const admins = users.filter((u) => u.role === 'Admin').length;
     const analysts = users.filter((u) => u.role === 'Analyst').length;
     const reviewers = users.filter((u) => u.role === 'Reviewer').length;
-    return { total, admins, analysts, reviewers };
-  }, [users]);
+    const pending = pendingUsers.length;
+    return { total, admins, analysts, reviewers, pending };
+  }, [users, pendingUsers]);
+
+  async function handleApproveUser(userId) {
+    try {
+      const res = await apiPut(`/auth/users/${userId}/approve`);
+      if (res.success) {
+        fetchUsers();
+      }
+    } catch (err) {
+      alert(err.message || 'Failed to approve user');
+    }
+  }
+
+  async function handleRejectUser(userId) {
+    if (!confirm('Are you sure you want to reject this registration request?')) return;
+    try {
+      const res = await apiPut(`/auth/users/${userId}/reject`);
+      if (res.success) {
+        fetchUsers();
+      }
+    } catch (err) {
+      alert(err.message || 'Failed to reject user');
+    }
+  }
 
   async function handleCreateUser(e) {
     e.preventDefault();
@@ -226,6 +259,74 @@ export default function UsersPage() {
           </div>
         </div>
 
+        {/* Pending Analyst & Reviewer Signoff Requests (Admin Approval Module) */}
+        {pendingUsers.length > 0 && (
+          <div className="mb-6 bg-gradient-to-r from-amber-50 via-orange-50 to-amber-50/60 border border-amber-300 rounded-2xl p-5 shadow-sm">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+              <div className="flex items-center gap-3">
+                <div className="h-9 w-9 rounded-xl bg-amber-500 text-white flex items-center justify-center font-bold shadow-xs shrink-0">
+                  <Clock size={19} />
+                </div>
+                <div>
+                  <h2 className="text-sm sm:text-base font-bold text-amber-950 flex items-center gap-2">
+                    <span>Pending Analyst &amp; Reviewer Registrations</span>
+                    <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-200 text-amber-900 border border-amber-300">
+                      {pendingUsers.length} Action Needed
+                    </span>
+                  </h2>
+                  <p className="text-xs text-amber-800 mt-0.5">
+                    One-time Administrator approval required before newly registered staff can access portfolio data.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Responsive Cards: 2 or 3 in each row */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+              {pendingUsers.map((u) => (
+                <div
+                  key={u._id}
+                  className="bg-white rounded-xl border border-amber-200/90 p-4 shadow-xs flex flex-col justify-between hover:border-amber-400 transition-all"
+                >
+                  <div>
+                    <div className="flex items-start justify-between gap-2 mb-2">
+                      <div>
+                        <h3 className="text-xs font-bold text-gray-900 truncate">{u.name}</h3>
+                        <p className="text-[11px] text-gray-500 font-mono truncate">{u.email}</p>
+                      </div>
+                      <span
+                        className={`text-[10px] font-bold px-2 py-0.5 rounded-full shrink-0 ${
+                          u.role === 'Reviewer' ? 'bg-amber-100 text-amber-800' : 'bg-blue-100 text-blue-800'
+                        }`}
+                      >
+                        {u.role}
+                      </span>
+                    </div>
+                    <p className="text-[11px] text-gray-600 mb-3 truncate">
+                      Dept: {u.department || 'Investment Team'}
+                    </p>
+                  </div>
+
+                  <div className="flex items-center gap-2 pt-2.5 border-t border-gray-100">
+                    <button
+                      onClick={() => handleRejectUser(u._id)}
+                      className="flex-1 py-1.5 px-2.5 rounded-lg border border-red-200 text-red-600 hover:bg-red-50 text-xs font-semibold transition"
+                    >
+                      Reject
+                    </button>
+                    <button
+                      onClick={() => handleApproveUser(u._id)}
+                      className="flex-1 py-1.5 px-2.5 rounded-lg bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs font-bold shadow-xs transition flex items-center justify-center gap-1"
+                    >
+                      <Check size={14} /> Approve Access
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* Search & Filter Bar */}
         <div className="bg-white rounded-xl border border-gray-200 p-4 mb-6 shadow-xs flex flex-col sm:flex-row gap-3 items-center justify-between">
           <div className="relative w-full sm:w-80">
@@ -273,44 +374,71 @@ export default function UsersPage() {
                   No team members found matching your search.
                 </p>
               ) : (
-                filteredUsers.map((u) => (
-                  <div
-                    key={u._id}
-                    className="bg-slate-50/70 rounded-xl border border-gray-100 p-3.5 shadow-xs flex flex-col justify-between"
-                  >
-                    <div>
-                      <div className="flex items-start justify-between gap-2 mb-2">
-                        <div className="flex items-center gap-2">
-                          <div className="h-8 w-8 rounded-full bg-teal-100 text-teal-700 flex items-center justify-center font-bold text-xs shrink-0">
-                            {u.name.charAt(0)}
+                filteredUsers.map((u) => {
+                  const isPending = u.approvalStatus === 'Pending' || (!u.isApproved && u.role !== 'Admin');
+                  const isRejected = u.approvalStatus === 'Rejected';
+
+                  return (
+                    <div
+                      key={u._id}
+                      className="bg-slate-50/70 rounded-xl border border-gray-100 p-3.5 shadow-xs flex flex-col justify-between"
+                    >
+                      <div>
+                        <div className="flex items-start justify-between gap-2 mb-2">
+                          <div className="flex items-center gap-2">
+                            <div className="h-8 w-8 rounded-full bg-teal-100 text-teal-700 flex items-center justify-center font-bold text-xs shrink-0">
+                              {u.name.charAt(0)}
+                            </div>
+                            <div>
+                              <span className="text-xs font-bold text-gray-900 block truncate max-w-[140px]">{u.name}</span>
+                              <span className="text-[11px] text-gray-500 block truncate max-w-[140px]">{u.email}</span>
+                            </div>
                           </div>
-                          <div>
-                            <span className="text-xs font-bold text-gray-900 block truncate max-w-[140px]">{u.name}</span>
-                            <span className="text-[11px] text-gray-500 block truncate max-w-[140px]">{u.email}</span>
-                          </div>
+                          <span
+                            className={`text-[10px] font-bold px-2 py-0.5 rounded-full shrink-0 ${
+                              u.role === 'Admin'
+                                ? 'bg-purple-100 text-purple-800'
+                                : u.role === 'Reviewer'
+                                ? 'bg-amber-100 text-amber-800'
+                                : 'bg-teal-100 text-teal-800'
+                            }`}
+                          >
+                            {u.role}
+                          </span>
                         </div>
-                        <span
-                          className={`text-[10px] font-bold px-2 py-0.5 rounded-full shrink-0 ${
-                            u.role === 'Admin'
-                              ? 'bg-purple-100 text-purple-800'
-                              : u.role === 'Reviewer'
-                              ? 'bg-amber-100 text-amber-800'
-                              : 'bg-teal-100 text-teal-800'
-                          }`}
-                        >
-                          {u.role}
-                        </span>
+
+                        <div className="flex items-center justify-between my-2 text-[11px]">
+                          <span className="text-gray-500 truncate">{u.department || 'Fund Operations'}</span>
+                          {isPending ? (
+                            <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-50 text-amber-800 border border-amber-300 animate-pulse flex items-center gap-1 shrink-0">
+                              <Clock size={10} /> Pending Signoff
+                            </span>
+                          ) : isRejected ? (
+                            <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-red-50 text-red-700 border border-red-200 shrink-0">
+                              Rejected
+                            </span>
+                          ) : (
+                            <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 shrink-0">
+                              Approved
+                            </span>
+                          )}
+                        </div>
+                      </div>
+
+                      <div className="flex items-center justify-between pt-2 border-t border-gray-200/50 text-[11px] text-gray-500">
+                        <span>Joined {new Date(u.createdAt).toLocaleDateString()}</span>
+                        {isPending && (
+                          <button
+                            onClick={() => handleApproveUser(u._id)}
+                            className="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold transition"
+                          >
+                            Approve
+                          </button>
+                        )}
                       </div>
                     </div>
-
-                    <div className="flex items-center justify-between pt-2 border-t border-gray-200/50 text-[11px] text-gray-500">
-                      <span>{u.department || 'Fund Operations'}</span>
-                      <span className="text-emerald-600 font-semibold inline-flex items-center gap-1">
-                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" /> Active
-                      </span>
-                    </div>
-                  </div>
-                ))
+                  );
+                })
               )}
             </div>
 
@@ -323,8 +451,8 @@ export default function UsersPage() {
                     <th className="py-3 px-6">Email</th>
                     <th className="py-3 px-6">Role</th>
                     <th className="py-3 px-6">Department</th>
-                    <th className="py-3 px-6">Status</th>
-                    <th className="py-3 px-6 text-right">Joined</th>
+                    <th className="py-3 px-6">Governance Status</th>
+                    <th className="py-3 px-6 text-right">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-100">
@@ -335,47 +463,84 @@ export default function UsersPage() {
                       </td>
                     </tr>
                   ) : (
-                    filteredUsers.map((u) => (
-                      <tr key={u._id} className="hover:bg-gray-50/80 transition">
-                        <td className="py-4 px-6 font-semibold text-gray-900 flex items-center gap-2.5">
-                          <div className="h-8 w-8 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-xs shrink-0">
-                            {u.name.charAt(0)}
-                          </div>
-                          <div>
-                            <span className="block">{u.name}</span>
-                            {u._id === user?._id && (
-                              <span className="text-[10px] text-blue-600 font-bold uppercase tracking-wider">
-                                (You)
+                    filteredUsers.map((u) => {
+                      const isApproved = u.isApproved !== false && u.approvalStatus !== 'Pending';
+                      const isPending = !isApproved && u.approvalStatus === 'Pending';
+                      const isRejected = u.approvalStatus === 'Rejected';
+
+                      return (
+                        <tr key={u._id} className="hover:bg-gray-50/80 transition">
+                          <td className="py-4 px-6 font-semibold text-gray-900 flex items-center gap-2.5">
+                            <div className="h-8 w-8 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-xs shrink-0">
+                              {u.name.charAt(0)}
+                            </div>
+                            <div>
+                              <span className="block">{u.name}</span>
+                              {u._id === user?._id && (
+                                <span className="text-[10px] text-blue-600 font-bold uppercase tracking-wider">
+                                  (You)
+                                </span>
+                              )}
+                            </div>
+                          </td>
+                          <td className="py-4 px-6 text-xs text-gray-600">{u.email}</td>
+                          <td className="py-4 px-6">
+                            <span
+                              className={`text-xs font-bold px-2.5 py-0.5 rounded-full ${
+                                u.role === 'Admin'
+                                  ? 'bg-purple-100 text-purple-800'
+                                  : u.role === 'Reviewer'
+                                  ? 'bg-amber-100 text-amber-800'
+                                  : 'bg-blue-100 text-blue-800'
+                              }`}
+                            >
+                              {u.role}
+                            </span>
+                          </td>
+                          <td className="py-4 px-6 text-xs text-gray-500">{u.department || 'Fund Operations'}</td>
+                          <td className="py-4 px-6">
+                            {isPending ? (
+                              <span className="text-xs font-semibold text-amber-700 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded inline-flex items-center gap-1.5">
+                                <span className="h-1.5 w-1.5 rounded-full bg-amber-500 animate-ping" />
+                                Pending Signoff
+                              </span>
+                            ) : isRejected ? (
+                              <span className="text-xs font-semibold text-rose-700 bg-rose-50 border border-rose-200 px-2 py-0.5 rounded inline-flex items-center gap-1.5">
+                                <span className="h-1.5 w-1.5 rounded-full bg-rose-500" />
+                                Rejected
+                              </span>
+                            ) : (
+                              <span className="text-xs font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded inline-flex items-center gap-1">
+                                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                                Approved & Active
                               </span>
                             )}
-                          </div>
-                        </td>
-                        <td className="py-4 px-6 text-xs text-gray-600">{u.email}</td>
-                        <td className="py-4 px-6">
-                          <span
-                            className={`text-xs font-bold px-2.5 py-0.5 rounded-full ${
-                              u.role === 'Admin'
-                                ? 'bg-purple-100 text-purple-800'
-                                : u.role === 'Reviewer'
-                                ? 'bg-amber-100 text-amber-800'
-                                : 'bg-blue-100 text-blue-800'
-                            }`}
-                          >
-                            {u.role}
-                          </span>
-                        </td>
-                        <td className="py-4 px-6 text-xs text-gray-500">{u.department || 'Fund Operations'}</td>
-                        <td className="py-4 px-6">
-                          <span className="text-xs font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded inline-flex items-center gap-1">
-                            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                            Active
-                          </span>
-                        </td>
-                        <td className="py-4 px-6 text-xs text-gray-400 text-right">
-                          {new Date(u.createdAt).toLocaleDateString()}
-                        </td>
-                      </tr>
-                    ))
+                          </td>
+                          <td className="py-4 px-6 text-xs text-right space-x-2">
+                            {isPending ? (
+                              <>
+                                <button
+                                  onClick={() => handleApproveUser(u._id)}
+                                  className="px-3 py-1 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg transition shadow-xs text-xs"
+                                >
+                                  Approve
+                                </button>
+                                <button
+                                  onClick={() => handleRejectUser(u._id)}
+                                  className="px-2.5 py-1 bg-white hover:bg-rose-50 border border-rose-300 text-rose-600 font-semibold rounded-lg transition text-xs"
+                                >
+                                  Reject
+                                </button>
+                              </>
+                            ) : (
+                              <span className="text-gray-400 font-mono text-[11px]">
+                                {new Date(u.createdAt).toLocaleDateString()}
+                              </span>
+                            )}
+                          </td>
+                        </tr>
+                      );
+                    })
                   )}
                 </tbody>
               </table>

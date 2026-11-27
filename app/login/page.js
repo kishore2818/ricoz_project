@@ -19,7 +19,8 @@ import {
   EyeOff,
   CheckCircle2,
   ArrowRight,
-  Building2
+  Building2,
+  Clock
 } from 'lucide-react';
 
 const DEMO_ACCOUNTS = [
@@ -160,9 +161,24 @@ export default function LoginPage() {
 
           {/* Error Message */}
           {error && (
-            <div className="mb-5 rounded-xl bg-red-50 border border-red-200 p-3.5 text-xs text-red-700 flex items-start gap-2">
-              <span className="text-red-500 font-bold shrink-0">✕</span>
-              <span className="leading-snug">{error}</span>
+            <div
+              className={`mb-5 rounded-xl p-3.5 text-xs flex items-start gap-2.5 ${
+                error.toLowerCase().includes('pending administrator approval') || error.toLowerCase().includes('pending')
+                  ? 'bg-amber-50 border border-amber-300 text-amber-900 shadow-xs'
+                  : 'bg-red-50 border border-red-200 text-red-700'
+              }`}
+            >
+              {error.toLowerCase().includes('pending administrator approval') || error.toLowerCase().includes('pending') ? (
+                <Clock size={16} className="text-amber-600 shrink-0 mt-0.5" />
+              ) : (
+                <span className="text-red-500 font-bold shrink-0">✕</span>
+              )}
+              <div>
+                <span className="font-bold block mb-0.5">
+                  {error.toLowerCase().includes('pending') ? 'Administrator Signoff Required' : 'Authentication Notice'}
+                </span>
+                <span className="leading-snug">{error}</span>
+              </div>
             </div>
           )}
 
